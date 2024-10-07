@@ -22,7 +22,12 @@
           }
         ],
         "styles": ["apps/client/src/styles.css"],
-        "scripts": []
+        "scripts": [],
+        "server": "apps/client/src/main.server.ts",
+        "prerender": true,
+        "ssr": {
+          "entry": "apps/client/server.ts"
+        }
       },
       "configurations": {
         "production": {

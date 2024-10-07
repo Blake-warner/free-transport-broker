@@ -1,0 +1,23 @@
+.flex-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.flex-item {
+    padding: 16px;
+}
+
+.container {
+    width: 100%;
+    max-width: 1100px;
+    padding: 24px;
+    box-sizing: border-box;
+}
+
+.centered {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
