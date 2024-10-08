@@ -3,3 +3,9 @@ html, body {
     font-weight: 400;
     font-style: normal;
 }
+
+.alert {
+    color: red;
+    font-style: italic;
+    margin: 2px 0px 7px 4px;
+}

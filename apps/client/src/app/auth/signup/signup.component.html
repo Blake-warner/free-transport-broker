@@ -1,1 +1,67 @@
-<p>signup works!</p>
+<div class="full-bg">
+    <div class="auth-form-container" [ngClass]="classMap[val]">
+        <main id="form-auth" class="w-100 m-auto">
+            <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+                <h1 class="h3 mb-2 fw-normal">Please sign up</h1>
+                <div class="form-floating">
+                    <label for="email">Email</label>
+                <input
+                    type="email"
+                    name="email"
+                    ngModel
+                    #email="ngModel"
+                    class="form-control"
+                    id="floatingInput"
+                    required
+                />
+                <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert">
+                    Please enter a valid email address!
+                </div>
+                </div>
+                <div class="form-floating">
+                    <label for="password">Password</label>
+                <input
+                type="password"
+                name="password"
+                #password="ngModel"
+                ngModel
+                class="form-control"
+                id="floatingPassword"
+                required
+                />
+                <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert">
+                    Please enter a password!
+                </div>
+                </div>
+                <div class="form-floating">
+                    <label for="full_name">Full Name</label>
+                    <input type="text" name="full_name" ngModel class="form-control" id="floatingText"/>
+                </div>
+                <button type="submit" [ngClass]="f.invalid ? 'invalid' : ''"[disabled]="f.invalid" >Sign up</button>
+            </form>
+        </main>
+        <main id="form-email-code" class="w-100 m-auto">
+            <form #vef="ngForm" class="verify-email-form" (ngSubmit)="onVerifyEmailSubmit(vef)">
+                <div class="wrapper">
+                    <div class="block">
+                        <input #1 class="form-control digit-one" ngModel type="text" name="_1" min="0" maxLength="1" max="9" value="" autoFocus (keyup)="validateDigits($event)">
+                    </div>
+                    <div class="block">
+                        <input #2 class="form-control digit-two" ngModel type="text" maxLength="1" name="_2" min="0" max="9" value="" (keyup)="validateDigits($event)">
+                    </div>
+                    <div class="block">
+                        <input #3 class="form-control digit-three" ngModel type="text" maxLength="1" name="_3" min="0" max="9" value="" (keyup)="validateDigits($event)">
+                    </div>
+                    <div class="block">
+                        <input #4 class="form-control digit-four" ngModel type="text" maxLength="1" name="_4" min="0" max="9" value="" (keyup)="validateDigits($event)">
+                    </div>
+                    <div class="block">
+                        <input #5 class="form-control digit-five" ngModel type="text" maxLength="1" name="_5" min="0" max="9" value="" (keyup)="validateDigits($event)">
+                    </div>
+                </div>
+                <button class="w-100 btn btn-lg btn-primary" type="submit">Verify Email</button>
+                <small>Didn't receive an email with a five digit pin enclosed? <a href="'{{send_email_endpoint}}'">click here</a> to send again!</small>
+            </form>
+        </main>
+    </div>
+</div>

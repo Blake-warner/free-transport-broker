@@ -40,10 +40,22 @@ button {
     max-width: 800px;
     background: #fff;
     border-radius: 20px;
+    padding: 26px;
+    .flex-item:first-child {
+        border-right: 1px solid rgba(102, 102, 102, 0.25);
+        padding-right: 24px;
+    }
+    .flex-item:last-child {
+        padding-left: 24px;
+    }
 }
 
 .dividers.flex-container {
     align-items: center;
+}
+
+.flex-item {
+    padding: 10px;
 }
 
 .or {
