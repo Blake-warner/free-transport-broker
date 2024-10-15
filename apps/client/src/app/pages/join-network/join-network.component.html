@@ -1,0 +1,168 @@
+<section class="hero">
+    <div class="flex-container container">
+        <div class="flex-item">
+            <h2>Join Our Network</h2>
+            <p>Show your profile to new potential customers</p>
+        </div>
+        <div class="flex-item bg-img">
+            <img src="assets/images/truck-banner-sm.png" alt="truck banner"/>
+        </div>
+    </div>
+</section>
+<section class="page-content join-network">
+    <div class="container">
+        <p>
+            Please complete all the fields below to optimize your profile and get the best results!
+        </p>
+        <form [formGroup]="truckDriverForm">
+            <div class="company">
+                <h3>Company</h3>
+                <div class="flex-container">
+                    <div class="flex-item">
+                        <input type="text" class="form-control" id="floatingInput" ngModel formControlName="company" placeholder="Company" required>
+                    </div>
+                    <div class="flex-item middle">
+                        <input type="text" class="form-control" id="floatingInput" ngModel formControlName="license" placeholder="License" required>
+                    </div>
+                    <div class="flex-item">
+                        <input type="text" class="form-control" id="floatingInput" ngModel formControlName="license" name="phone" placeholder="Phone" required>
+                    </div>
+                    <div class="flex-item">
+                        <input type="text" class="form-control" id="floatingInput" ngModel formControlName="address" name="address" placeholder="Address" required>
+                    </div>
+                    <div class="flex-item middle">
+                        <input type="text" class="form-control" id="floatingInput" ngModel formControlName="city" placeholder="City" required>
+                    </div>
+                    <div class="flex-item">
+                        <input type="text" class="form-control" id="floatingInput" ngModel formControlName="zip" placeholder="Zip Code" required>
+                    </div>
+                    <div class="flex-item">
+                        <select *ngIf="states.length" class="form-control" ngModel formControlName="state" id="floatingInput" placeholder="State" required>
+                            @for (state of states; track state; let i = $index) {
+                                @if(i < 1) {
+                                    <option value="" disabled selected>Select State...</option>
+                                } @else {
+                                    <option value={{state}}>{{state}}</option>
+                                }
+                            } @empty {
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="trucks">
+                <h3>Trucks</h3>
+                <div formArrayName="truckTypesArr">
+                    @for(item of getTruckItems().controls; track item; let i = $index) {
+                        <div [formGroupName]="i" class="flex-container form-array-item">
+                            <div class="flex-item">
+                                <select *ngIf="trucks.length" class="form-control" formControlName="truckType" id="floatingInput" required>
+                                    @for (truck of trucks; track truck; let i = $index) {
+                                        @if(i < 1) {
+                                            <option value="" disabled selected>Select Truck...</option>
+                                        }@else {
+                                            <option value={{truck}}>{{truck}}</option>
+                                        }
+                                    } @empty {
+                                    }
+                                </select>
+                            </div>
+                            <div class="flex-item middle">
+                                <select *ngIf="loadCapacity.length" class="form-control" formControlName="loadCapacity" id="floatingInput">
+                                    <option selected="selected">Load Capacity</option>
+                                    @for (load of loadCapacity; track load; let i = $index) {
+                                        @if(i > 1) {
+                                            <option value="" disabled selected>Select Load Capacity...</option>
+                                        }
+                                        <option value={{load}}>{{load}}</option>
+                                    } @empty {
+                                    }
+                                </select>
+                            </div>
+                            <div class="flex-item">
+                                <select *ngIf="serviceTypes.length" class="form-control" formControlName="serviceType" id="floatingInput">
+                                    @for (type of serviceTypes; track type; let i = $index) {
+                                        @if( i < 1) {
+                                            <option value="" disabled selected>Select Service...</option>
+                                        }@else {
+                                            <option value={{type}}>{{type}}</option>
+                                        }
+                                    } @empty {
+                                    }
+                                </select>
+                            </div>
+                            <div class="flex-item">
+                                <input type="number" class="form-control" id="floatingInput" formControlName="pricePerMile" placeholder="Price Per Mile" required>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <button class="add-item" (click)="addTruckItem()">
+                    Add Truck
+                    <span class="plus-sign"></span>
+                </button>
+            </div>
+            <div class="materials">
+                <h3>Materials</h3>
+                <div formArrayName="materialsArr" class="form-array-group">
+                    @for(item of getMaterialsItems().controls; track item; let i = $index) {
+                        <div [formGroupName]="i" class="flex-container form-array-item">
+                            <div class="flex-item">
+                                <select *ngIf="materials.length" class="form-control" formControlName="materials" id="floatingInput" required>
+                                    @for (material of materials; track material; let i = $index) {
+                                        @if(i < 1) {
+                                            <option value="" disabled selected>Select Materials...</option>
+                                        }@else {
+                                            <option value={{material}}>{{material}}</option>
+                                        }
+                                    } @empty {
+                                    }
+                                </select>
+                            </div>
+                            <div class="flex-item middle">
+                                <select *ngIf="unitForWeight.length" class="form-control" formControlName="unitForWeight" id="floatingInput">
+                                    @for (unit of unitForWeight; track unit; let i = $index) {
+                                        @if(i < 1) {
+                                            <option value="" disabled selected>Select Unit For Weight...</option>
+                                        }
+                                        <option value={{unit}}>{{unit}}</option>
+                                    } @empty {
+                                    }
+                                </select>
+                            </div>
+                            <div class="flex-item">
+                                <input type="number" class="form-control" id="floatingInput" formControlName="pricePerUnit" placeholder="Price Per Unit..." required>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <button class="add-item" (click)="addMaterialsItem()">
+                    Add Materials
+                    <span class="plus-sign"></span>
+                </button>
+            </div>
+            <div class="payment-info">
+                <h3>Payment Info</h3>
+                <div class="flex-container">
+                    <div class="flex-item">
+                        <input type="text" class="form-control" id="floatingInput" formControlName="name" name="name" placeholder="Enter Name On Card..." required>
+                    </div>
+                    <div class="flex-item middle">
+                        <input type="number" class="form-control" id="floatingInput" formControlName="cardNumber" name="cardNumber" placeholder="Enter Card Number" required>
+                    </div>
+                    <div class="flex-item">
+                        <input type="date" class="form-control" id="floatingInput" formControlName="expDate" name="expDate" placeholder="Enter Exp Date" required>
+                    </div>
+                    <div class="flex-item">
+                        <input type="number" class="form-control" id="floatingInput" formControlName="securityCode" name="securityCode" placeholder="Enter Security Code" required>
+                    </div>
+                </div>
+            </div>
+            <button id="sign-in" type="submit">
+                <div>
+                    Add Payment Method
+                </div>
+            </button>
+        </form>
+    </div>
+</section>

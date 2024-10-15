@@ -10,7 +10,7 @@
       "options": {
         "commands": [
           "nx build server",
-          "docker build -f ./apps/server/Dockerfile . -t web-server"
+          "docker build -f ./apps/server/Dockerfile . -t server"
         ],
         "parallel": false
       }

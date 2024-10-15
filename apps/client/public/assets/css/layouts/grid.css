@@ -1,7 +1,7 @@
 .flex-container {
     display: flex;
     justify-content: flex-start;
-    align-items: flex-start;
+    align-items: start;
 }
 
 .flex-item {
@@ -13,6 +13,7 @@
     max-width: 1100px;
     padding: 24px;
     box-sizing: border-box;
+    margin: auto;
 }
 
 .centered {
@@ -20,4 +21,8 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+}
+
+.middle {
+    margin: 0 22px!important;
 }

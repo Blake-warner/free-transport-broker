@@ -1,8 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('../public/assets/css/base/global.css');
 @import url('../public/assets/css/base/reset.css');
+@import url('../public/assets/css/base/typography.css');
 @import url('../public/assets/css/layouts/grid.css');
+@import url('../public/assets/css/layouts/page.css');
+@import url('../public/assets/css/layouts/header.css');
+@import url('../public/assets/css/layouts/menu.css');
+@import url('../public/assets/css/layouts/banner.css');
+@import url('../public/assets/css/layouts/footer.css');
+@import url('../public/assets/css/components/form.css');
 @import url('../public/assets/css/components/form-field.css');
 @import url('../public/assets/css/components/button.css');
 @import url('../public/assets/css/pages/signin.css');
 @import url('../public/assets/css/pages/signup.css');
+@import url('../public/assets/css/pages/join-network.css');

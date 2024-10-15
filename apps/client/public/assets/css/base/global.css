@@ -9,3 +9,16 @@ html, body {
     font-style: italic;
     margin: 2px 0px 7px 4px;
 }
+
+label {
+    color: #777;
+    margin: 10px;
+}
+
+h2 {
+    margin-bottom: 10px;
+}
+
+a {
+    transition: .2s all;
+}

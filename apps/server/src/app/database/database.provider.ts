@@ -1,24 +1,20 @@
 import { DataSource } from 'typeorm';
 import { User } from '../user/user.entity';
-import { VerifyEmail } from '../verify-email/verify-email.entity';
-import { ConfigService } from '@nestjs/config';
-import { DatabaseTypes } from './database-types.enum';
-
-//const configService: ConfigService = @Inject(ConfigService);
+import { VerifyEmail } from '../auth/verify-email/verify-email.entity';
 
 export const databaseProviders = [
     {
-        provide: 'DATA_SOURCE',
-        useFactory: async (configService: ConfigService) => {
+        provide: 'DATA_SOURCE',  
+        useFactory: async () => {
             const dataSource = new DataSource({
-                type: configService.get<DatabaseTypes.MYSQL>('DATABASE_TYPE'),
-                host: configService.get<string>('DATABASE_HOST'),
-                port: configService.get<number>('DATABASE_PORT'),
-                username: configService.get<string>('DATABASE_USERNAME'),
-                password: configService.get<string>('DATABASE_PASSWORD'),
-                database: configService.get<string>('DATABASE_NAME'),
+                type: 'mysql',//configService.get<DatabaseTypes.MYSQL>('DATABASE_TYPE'),
+                host: 'localhost', //configService.get<string>('DATABASE_HOST'),
+                port: 3306,  //configService.get<number>('DATABASE_PORT'),
+                username: 'root', //configService.get<string>('DATABASE_USERNAME'),
+                password: 'root', //configService.get<string>('DATABASE_PASSWORD'),
+                database: 'free_transport_broker', //configService.get<string>('DATABASE_NAME'),
                 entities: [
-                    __dirname + '/../**/*.entity{.ts,.js}',
+                   // __dirname + '/../**/*.entity{.ts,.js}',
                     User,
                     VerifyEmail,
                 ],
@@ -26,6 +22,5 @@ export const databaseProviders = [
             });
             return dataSource.initialize();
         },
-        inject: [ConfigService]
     }
 ]

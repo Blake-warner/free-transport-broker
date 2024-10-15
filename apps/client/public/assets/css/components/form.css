@@ -1,0 +1,9 @@
+.form-array-item {
+    border-top: 1px dotted #fff;
+    margin-bottom: 0px;
+    padding-top: 24px;
+}
+
+.form-array-item:first-child {
+    border: none;
+}

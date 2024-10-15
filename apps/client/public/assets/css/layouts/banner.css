@@ -1,0 +1,23 @@
+section.hero{
+    background: #0b68d0;
+    color: #fff;
+    p {
+        color: #fff;
+    }
+    img {
+        margin: 0;
+    }
+}
+
+.hero .bg-img {
+    padding: 0;
+}
+
+.hero .container {
+    padding: 0;
+}
+
+.hero .flex-container {
+    justify-content: space-between;
+    align-items: center;
+}
