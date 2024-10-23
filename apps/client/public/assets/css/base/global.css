@@ -1,3 +1,7 @@
+:root {
+    --orange: #f79c0d;
+}
+
 html, body {
     font-family: "Roboto", sans-serif;
     font-weight: 400;

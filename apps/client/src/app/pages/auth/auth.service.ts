@@ -41,6 +41,8 @@ export class AuthService {
 
   verifyEmail(email: string) {
     const payload = {email};
+    console.log(CONSTANTS.VERIFY_EMAIL_ENDPOINT);
+    
     return this.http.post(CONSTANTS.VERIFY_EMAIL_ENDPOINT, payload);
   }
 

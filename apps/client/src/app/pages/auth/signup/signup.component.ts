@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TempUserData } from '../user/interfaces/tempUserData.interface';
 import { RouterModule } from '@angular/router';
 type Val = 1 | 2 | 3;
+
 @Component({
   selector: 'app-signup',
   standalone: true,
@@ -18,6 +19,7 @@ type Val = 1 | 2 | 3;
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.css',
 })
+
 export class SignupComponent implements OnInit {
   send_email_endpoint = CONSTANTS.VERIFY_EMAIL_ENDPOINT;
   showEmailCodeForm = false;
@@ -49,10 +51,10 @@ export class SignupComponent implements OnInit {
   }
 
   onVerifyEmailSubmit(form: NgForm) {
-      const stringifiedCode = ''+form.value._1 +form.value._2+form.value._3+form.value._4+form.value._5;
-      const code = parseInt(stringifiedCode);
-      const payload = { email: this.tempUserData.email, code } as { email: string; code: number; };
-      this.authService.emailVerified(payload.email, payload.code);
+    const stringifiedCode = ''+form.value._1 +form.value._2+form.value._3+form.value._4+form.value._5;
+    const code = parseInt(stringifiedCode);
+    const payload = { email: this.tempUserData.email, code } as { email: string; code: number; };
+    this.authService.emailVerified(payload.email, payload.code);
   }
 
   validateDigits(event: any ) {
