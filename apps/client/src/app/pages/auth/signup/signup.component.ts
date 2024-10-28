@@ -3,9 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import * as CONSTANTS from '../../../shared/constants';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TempUserData } from '../user/interfaces/tempUserData.interface';
 import { RouterModule } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { catchError, of } from 'rxjs';
 type Val = 1 | 2 | 3;
 
 @Component({
@@ -34,7 +36,12 @@ export class SignupComponent implements OnInit {
   }
   val: Val = 1;
 
-  constructor(private authService: AuthService, private route: ActivatedRoute) {}
+  constructor(
+    private authService: AuthService,
+    private route: ActivatedRoute,
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.val = 2;
@@ -47,14 +54,27 @@ export class SignupComponent implements OnInit {
     this.showEmailCodeForm = true;
     this.val = 3;
     this.tempUserData = {...form.value};
-    this.authService.verifyEmail(this.tempUserData.email);
+    this.authService.verifyEmail(this.tempUserData.email).pipe(
+      catchError(err => of(err)),
+    ).subscribe((res) => {
+      console.log(res);
+    })
   }
 
   onVerifyEmailSubmit(form: NgForm) {
     const stringifiedCode = ''+form.value._1 +form.value._2+form.value._3+form.value._4+form.value._5;
     const code = parseInt(stringifiedCode);
     const payload = { email: this.tempUserData.email, code } as { email: string; code: number; };
-    this.authService.emailVerified(payload.email, payload.code);
+    this.authService.emailVerified(payload.email, payload.code).subscribe((emailVerifed) => {
+      if(emailVerifed) {
+        this.authService.signup(this.tempUserData).pipe(
+          catchError( err => of(err))
+        ).subscribe((res) => {
+          console.log(res);
+          this.router.navigate(['/signin']);
+        })
+      }
+    });
   }
 
   validateDigits(event: any ) {

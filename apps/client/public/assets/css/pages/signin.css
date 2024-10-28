@@ -5,14 +5,14 @@
     border: 1px solid #333333;
     border-radius: 40px;
     color: #333;
-}
-
-button {
-    background: #939393;
-    border-radius: 32px;
     font-style: normal;
     font-weight: 500;
-    color: #FFFFFF;
+}
+
+button#sign-in {
+    background: #939393;
+    font-style: normal;
+    font-weight: 500;
 }
 
 #sign-in:hover {
@@ -82,9 +82,9 @@ img {
 
 #create-account {
     background: #000;
-    :hover {
-        background-color: rgba(0,0,0, .7);
-    }
+    border-radius: 32px;
+    font-style: normal;
+    font-weight: 500;
 }
 
 #create-account:hover {

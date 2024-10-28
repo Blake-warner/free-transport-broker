@@ -10,10 +10,7 @@ async function bootstrap() {
   const version = '/v1';
   const port = process.env.PORT || 3000;
   app.useGlobalPipes(new ValidationPipe());
-  app.enableCors({
-    origin: ['http://localhost:4200'],
-    credentials: true
-})
+  app.enableCors()
   await app.listen(port);
   Logger.log(
     `🚀 Application is running on: http://localhost:${port}/${CONSTANTS.globalPrefix}${version}`

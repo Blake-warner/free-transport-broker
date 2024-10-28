@@ -8,6 +8,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { MailModule } from './auth/mailer/mailer.module';
+import { TruckDriversModule } from './truck-drivers/truck-drivers.module';
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { MailModule } from './auth/mailer/mailer.module';
     UserModule,
     AuthModule,
     ConfigModule.forRoot(),
-    MailModule
+    MailModule,
+    TruckDriversModule,
   ],
   controllers: [AppController],
   providers: [AppService],

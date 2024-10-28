@@ -4,6 +4,8 @@ import * as CONSTANTS from '../../shared/constants';
 import { User } from './user/user';
 import { Router } from '@angular/router';
 import { LocalStorageService } from './local-storage.service';
+import { TempUserData } from './user/interfaces/tempUserData.interface';
+import { DomSanitizer } from '@angular/platform-browser';
 
 interface authUserPayload {
   user: User;
@@ -22,6 +24,7 @@ export class AuthService {
     private http: HttpClient,
     private router: Router,
     private locaStorageService: LocalStorageService,
+    private sanitizer: DomSanitizer
   ) { 
     this.http = new HttpClient(this.handler);
   }
@@ -29,9 +32,7 @@ export class AuthService {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   accessTokenExpTimer: any;
 
-  signup(data: User) {
-    console.log(data);
-    console.log(CONSTANTS.SIGNUP_ENDPOINT);
+  signup(data: TempUserData) {
     return this.http.post<User>(CONSTANTS.SIGNUP_ENDPOINT, data);
   }
 
@@ -41,13 +42,14 @@ export class AuthService {
 
   verifyEmail(email: string) {
     const payload = {email};
+    console.log(payload);
     console.log(CONSTANTS.VERIFY_EMAIL_ENDPOINT);
-    
     return this.http.post(CONSTANTS.VERIFY_EMAIL_ENDPOINT, payload);
   }
 
   emailVerified(email: string, code: number) {
     console.log(CONSTANTS.EMAIL_VERIFIED_ENDPOINT+'?email='+email+'&code='+code);
+    this.sanitizer.bypassSecurityTrustUrl(CONSTANTS.EMAIL_VERIFIED_ENDPOINT+'?email='+email+'&code='+code);
     return this.http.get(CONSTANTS.EMAIL_VERIFIED_ENDPOINT+'?email='+email+'&code='+code);
   }
 
@@ -74,7 +76,7 @@ export class AuthService {
     this.locaStorageService.setItem('user', JSON.stringify(payload.user));
     this.locaStorageService.setItem('authTokens', JSON.stringify(authTokens));
     this.locaStorageService.setItem('date', JSON.stringify(date));
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/join-network']);
   }
 
   handleError<T extends {error: { error: unknown }}>(error: T) {

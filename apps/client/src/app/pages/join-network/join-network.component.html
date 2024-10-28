@@ -15,7 +15,7 @@
             Please complete all the fields below to optimize your profile and get the best results!
         </p>
         <form [formGroup]="truckDriverForm">
-            <div class="company">
+            <div class="company form-section">
                 <h3>Company</h3>
                 <div class="flex-container">
                     <div class="flex-item">
@@ -50,7 +50,7 @@
                     </div>
                 </div>
             </div>
-            <div class="trucks">
+            <div class="trucks form-section">
                 <h3>Trucks</h3>
                 <div formArrayName="truckTypesArr">
                     @for(item of getTruckItems().controls; track item; let i = $index) {
@@ -102,7 +102,7 @@
                     <span class="plus-sign"></span>
                 </button>
             </div>
-            <div class="materials">
+            <div class="materials form-section">
                 <h3>Materials</h3>
                 <div formArrayName="materialsArr" class="form-array-group">
                     @for(item of getMaterialsItems().controls; track item; let i = $index) {
@@ -141,7 +141,7 @@
                     <span class="plus-sign"></span>
                 </button>
             </div>
-            <div class="payment-info">
+            <div class="payment-info form-section">
                 <h3>Payment Info</h3>
                 <div class="flex-container">
                     <div class="flex-item">
@@ -157,12 +157,12 @@
                         <input type="number" class="form-control" id="floatingInput" formControlName="securityCode" name="securityCode" placeholder="Enter Security Code" required>
                     </div>
                 </div>
+                <button class="add-item">
+                    Add Payment
+                    <span class="plus-sign"></span>
+                </button>
             </div>
-            <button id="sign-in" type="submit">
-                <div>
-                    Add Payment Method
-                </div>
-            </button>
+            <button type="submit" class="submit">Join Network Now</button>
         </form>
     </div>
 </section>

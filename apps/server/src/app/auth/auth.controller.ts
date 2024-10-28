@@ -9,6 +9,10 @@ import { MailService } from './mailer/mailer.service';
 import { ConfigService } from '@nestjs/config';
 import { SigninDto } from './dto/signin.dto';
 import * as CONSTANTS from '../shared/constants';
+import { Auth } from './decorators/auth.decorator';
+import { AuthType } from './enums/auth-type.enum';
+
+@Auth(AuthType.None)
 @Controller(CONSTANTS.versions)
 export class AuthController {
     constructor(
@@ -27,17 +31,10 @@ export class AuthController {
         return signInResponse;
     }
 
-    @Post('sign-up')
+    @Post('signup')
     signup(@Body() signupDto: SignupDto) {
-        console.log(signupDto);
+        console.log('Sign up DTO: ', signupDto);
         return this.authService.signup(signupDto);
-    }
-
-    @Get('sign-up')
-    signuptest() {
-        return {
-            message: "fuck you"
-        }
     }
 
     @HttpCode(HttpStatus.CREATED)
@@ -81,6 +78,6 @@ export class AuthController {
         if(!emailToVerify) {
             throw new BadRequestException("email and code combination not found. Please submit a valid code");
         }
-        return emailToVerify;
+        return true;
     }
 }
