@@ -1,13 +1,14 @@
 import { Module } from '@nestjs/common';
 import { EventEmitterModule } from '@nestjs/event-emitter';
-import { ConfigModule } from '@nestjs/config';
-
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DatabaseModule } from './database/database.module';
-import { VerifyEmailService } from './verify-email/verify-email.service';
 import { SharedModule } from './shared/shared.module';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
+import { ConfigModule } from '@nestjs/config';
+import { MailModule } from './auth/mailer/mailer.module';
+import { TruckDriversModule } from './truck-drivers/truck-drivers.module';
 
 @Module({
   imports: [
@@ -15,11 +16,12 @@ import { UserModule } from './user/user.module';
     DatabaseModule,
     SharedModule,
     UserModule,
-    ConfigModule.forRoot({
-      cache: true
-    })
+    AuthModule,
+    ConfigModule.forRoot(),
+    MailModule,
+    TruckDriversModule,
   ],
   controllers: [AppController],
-  providers: [AppService, VerifyEmailService],
+  providers: [AppService],
 })
 export class AppModule {}

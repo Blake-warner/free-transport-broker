@@ -7,3 +7,6 @@ export const globalPrefix = 'api';
 export const jwtConstants = {
     secret: 'srthgg56564egr13224qhnj7_&RD#@VSYEJKTnvaiu45nhwofni5484#Q%^BWGTWG$Q@$r'
 }
+
+// request user key
+export const REQUEST_USER_KEY = 'user';

@@ -101,3 +101,7 @@
     width: 54px;
     height: 54px;
 }
+
+input.form-control {
+    padding: 10px;
+}

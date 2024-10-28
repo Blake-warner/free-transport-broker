@@ -1,0 +1,26 @@
+footer {
+    background-color: #f79c0d;
+    a {
+        color: #fff;
+    }
+    .flex-container {
+        align-items: center;
+        justify-content: space-between;
+    }
+    .flex-item {
+        padding: 0!important;
+        .item:last-child a {
+            padding-right: 0;
+        }
+    }
+    #logo {
+        font-size: 30px;
+        color: #fff;
+    }
+}
+
+.copy-right {
+    text-align: right;
+    color: #fff;
+    margin-top: 30px;
+}

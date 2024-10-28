@@ -5,14 +5,18 @@
     border: 1px solid #333333;
     border-radius: 40px;
     color: #333;
-}
-
-button {
-    background: #939393;
-    border-radius: 32px;
     font-style: normal;
     font-weight: 500;
-    color: #FFFFFF;
+}
+
+button#sign-in {
+    background: #939393;
+    font-style: normal;
+    font-weight: 500;
+}
+
+#sign-in:hover {
+    background-color: rgba(147,147,147, .7);
 }
 
 .google-icon {
@@ -36,7 +40,7 @@ button {
     flex-grow: 1;
 }
 
-.container {
+.signin-modal.flex-container.container {
     max-width: 800px;
     background: #fff;
     border-radius: 20px;
@@ -48,14 +52,13 @@ button {
     .flex-item:last-child {
         padding-left: 24px;
     }
+    .flex-item {
+        padding: 10px;
+    }
 }
 
 .dividers.flex-container {
     align-items: center;
-}
-
-.flex-item {
-    padding: 10px;
 }
 
 .or {
@@ -79,4 +82,11 @@ img {
 
 #create-account {
     background: #000;
+    border-radius: 32px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+#create-account:hover {
+    background-color: rgba(0,0,0, .7);
 }

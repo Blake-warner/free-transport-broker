@@ -1,0 +1,23 @@
+<footer>
+    <div class="flex-container container">
+        <div id="logo" class="flex-item">
+            Free Transport Logo
+        </div>
+        <div class="flex-item">
+            <nav>
+                <ul>
+                    @for (item of menu; track item.name) {
+                        <li class="item">
+                            <a href="#" routerLink={{item.url}}>{{item.name}}</a>
+                        </li>
+                    } @empty {
+                        <li></li>
+                    }
+                </ul>
+            </nav>
+            <div class="copy-right">
+                © 2024 Free Transport Broker, Inc. All rights reserved
+            </div>
+        </div>
+    </div>
+</footer>

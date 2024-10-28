@@ -1,4 +1,9 @@
-FROM arm64v8/nginx
-COPY ./dist/apps/client /usr/share/nginx/html
+FROM node:latest
 
-EXPOSE 80
+WORKDIR /app
+COPY ./dist/apps/client .
+ARG PORT=4200
+ENV PORT=$PORT
+
+EXPOSE $PORT
+CMD node ./server/server.mjs

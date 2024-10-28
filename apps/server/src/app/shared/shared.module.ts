@@ -1,7 +1,7 @@
 import { Module} from '@nestjs/common';
 import {JwtModule} from "@nestjs/jwt";
-//import * as redisStore from 'cache-manager-redis-store';
-//import {RedisService} from "./redis.service";
+// import * as redisStore from 'cache-manager-redis-store';
+// import {RedisService} from "./redis.service";
 
 @Module({
     imports: [
@@ -15,7 +15,7 @@ import {JwtModule} from "@nestjs/jwt";
             port: 6379,
         })*/
     ],
-   // providers: [RedisService],
+    // providers: [RedisService],
     exports: [
         JwtModule,
        // CacheModule,

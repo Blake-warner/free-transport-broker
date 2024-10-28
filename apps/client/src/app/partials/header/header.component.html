@@ -1,0 +1,22 @@
+<header class="main-header">
+    <div class="container">
+        <div class="flex-container">
+            <div id="logo" class="flex-item">
+                Free Transport Broker
+            </div>
+            <div class="flex-item">
+                <nav class="header-nav">
+                    <ul>
+                        @for (item of menu; track item.name) {
+                            <li class="item">
+                                <a href="#" routerLink={{item.url}}>{{item.name}}</a>
+                            </li>
+                        } @empty {
+                            <li></li>
+                        }
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
