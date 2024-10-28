@@ -37,10 +37,6 @@ export class JoinNetworkComponent implements OnInit {
     zip: new FormControl(''),
     state: new FormControl(''),
     // Truck section
-    /*truckType: new FormControl(''),
-    loadCapacity: new FormControl(''),
-    serviceType: new FormControl(''),
-    pricePerMile: new FormControl(''),*/
     truckTypesArr: new FormArray([
       this.createTruckItem()
     ]),
