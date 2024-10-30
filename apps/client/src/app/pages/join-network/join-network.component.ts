@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormArray, FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 @Component({
   selector: 'app-join-network',
   standalone: true,
@@ -15,6 +15,7 @@ export class JoinNetworkComponent implements OnInit {
   }
 
   public truckItems!: {id: number, name: string}[];
+  @ViewChild('creditCardNumber') creditCardNumber!: ElementRef;
 
   ngOnInit() {
     this.truckItems = [];
@@ -44,6 +45,7 @@ export class JoinNetworkComponent implements OnInit {
       this.createMaterialItem()
     ]),
     // Payment Info
+    name: new FormControl(''),
     cardNumber: new FormControl(''),
     expDate: new FormControl(''),
     securityCode: new FormControl(''),
@@ -69,6 +71,10 @@ export class JoinNetworkComponent implements OnInit {
       unitForWeight: new FormControl(''),
       pricePerUnit: new FormControl(''),
     });
+  }
+
+  onSubmit() {
+    console.log('this is second: ', this.truckDriverForm.value);
   }
 
   getTruckItems(): FormArray {
@@ -103,7 +109,14 @@ export class JoinNetworkComponent implements OnInit {
 
   public materials = ['Aggregate', 'Concrete', 'Sand', 'Dirt', 'Rock'];
   public unitForWeight = ['Pounds', 'Kilo tons'];
-  onSubmit(form: NgForm) {
-    console.log(form.value);
+
+  formatCreditCardNumber(event: any) {
+    console.log(event.target.value);
+    const formattedInputNumber = event.target.value.replaceAll(" ", "");
+    const formattedOutputNumber = formattedInputNumber.split("").reduce((seed: string, next: string, index: number) => {
+      if (index !== 0 && !(index % 4)) seed += " ";
+      return seed + next;
+    }, "");
+    this.creditCardNumber.nativeElement.value = formattedOutputNumber;
   }
 }

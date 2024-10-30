@@ -12,3 +12,7 @@ input.form-control, select.form-control {
 select::invalid {
     color: #999999;
   }
+
+  select::placeholder {
+    color: #777;
+  }

@@ -11,6 +11,7 @@ import { SigninDto } from './dto/signin.dto';
 import * as CONSTANTS from '../shared/constants';
 import { Auth } from './decorators/auth.decorator';
 import { AuthType } from './enums/auth-type.enum';
+import { RefreshTokenDto } from './dto/refresh-token.dto';
 
 @Auth(AuthType.None)
 @Controller(CONSTANTS.versions)
@@ -80,4 +81,10 @@ export class AuthController {
         }
         return true;
     }
+
+    @Post('refresh-token')
+    refreshTokens(@Body() refreshTokenDto: RefreshTokenDto) {
+        return this.authService.refreshTokens(refreshTokenDto);
+    }
+    
 }

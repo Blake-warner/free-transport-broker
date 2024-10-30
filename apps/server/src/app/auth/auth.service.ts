@@ -103,7 +103,25 @@ export class AuthService {
         return {
             user,
             accessToken,
+            refreshToken,
+            expiresIn: this.jwtConfiguration.accessTokenTtl
+        }
+    }
+
+    async generateRefreshToken(user: User) {
+        const refreshToken = await Promise.resolve(this.signToken(user.id, this.jwtConfiguration.refreshTokenTtl));
+        return {
+            user,
             refreshToken
+        }
+    }
+
+    async generateAccessToken(user: User) {
+        const accessToken = await Promise.resolve(
+            this.signToken<Partial<ActiveUserData>>(user.id, this.jwtConfiguration.accessTokenTtl, { email: user.email, role: user.role }));
+        return {
+            user,
+            accessToken
         }
     }
 

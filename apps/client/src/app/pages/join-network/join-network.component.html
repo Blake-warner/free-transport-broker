@@ -148,13 +148,13 @@
                         <input type="text" class="form-control" id="floatingInput" formControlName="name" name="name" placeholder="Enter Name On Card..." required>
                     </div>
                     <div class="flex-item middle">
-                        <input type="number" class="form-control" id="floatingInput" formControlName="cardNumber" name="cardNumber" placeholder="Enter Card Number" required>
+                        <input type="text" class="form-control" id="floatingInput" #creditCardNumber maxlength="19" (keyup)="formatCreditCardNumber($event)" formControlName="cardNumber" name="cardNumber" placeholder="Enter Card Number" required>
                     </div>
                     <div class="flex-item">
                         <input type="date" class="form-control" id="floatingInput" formControlName="expDate" name="expDate" placeholder="Enter Exp Date" required>
                     </div>
                     <div class="flex-item">
-                        <input type="number" class="form-control" id="floatingInput" formControlName="securityCode" name="securityCode" placeholder="Enter Security Code" required>
+                        <input type="text" class="form-control" id="floatingInput" formControlName="securityCode" name="securityCode" placeholder="Enter Security Code" required>
                     </div>
                 </div>
                 <button class="add-item">
@@ -162,7 +162,7 @@
                     <span class="plus-sign"></span>
                 </button>
             </div>
-            <button type="submit" class="submit">Join Network Now</button>
+            <button type="submit" class="submit" (click)="onSubmit()">Join Network Now</button>
         </form>
     </div>
 </section>

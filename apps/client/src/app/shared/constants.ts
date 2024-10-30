@@ -18,15 +18,3 @@ export const VERIFY_EMAIL = '/verify-email';
 export const EMAIL_VERIFIED = '/email-verified';
 export const EMAIL_VERIFIED_ENDPOINT = HOST + ':' + API_PORT + API_PREFIX + VERSION + EMAIL_VERIFIED;
 export const VERIFY_EMAIL_ENDPOINT = HOST + ':' + API_PORT + API_PREFIX + VERSION + VERIFY_EMAIL;
-
-// Product
-export const PRODUCTS = '/products';
-export const PRODUCT = '/product/:id';
-export const PRODUCTS_ENDPOINT = HOST + ':' + API_PORT + API_PREFIX + VERSION + PRODUCTS;
-export const PRODUCT_ENDPOINT = HOST + ':' + API_PORT + API_PREFIX + VERSION + PRODUCT;
-
-// Product Categories
-export const CATEGORIES = '/categories';
-export const CATEGORY_TREE = '/category-tree';
-export const CATEGORIES_ENDPOINT = HOST + ':' + API_PORT + API_PREFIX + VERSION + CATEGORIES;
-export const CATEGORY_TREE_ENDPOINT = HOST + ':' + API_PORT + API_PREFIX + VERSION + CATEGORY_TREE;
