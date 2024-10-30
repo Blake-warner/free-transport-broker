@@ -14,11 +14,12 @@
     }
     input, select {
         width: 100%;
-        border-radius: 0;
+        border-radius: 4px;
         margin-bottom: 24px;
     }
     h3 {
         color: #f79c0d;
+        margin-bottom: 10px;
     }
 }
 
