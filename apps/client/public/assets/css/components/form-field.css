@@ -9,10 +9,6 @@ input.form-control, select.form-control {
     font-size: 14px;
 }
 
-select::invalid {
-    color: #999999;
-  }
-
-  select::placeholder {
-    color: #777;
-  }
+select {
+  color: #777;
+}
