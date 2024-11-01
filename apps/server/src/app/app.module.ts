@@ -4,11 +4,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DatabaseModule } from './database/database.module';
 import { SharedModule } from './shared/shared.module';
-import { UserModule } from './user/user.module';
+import { UserModule } from './users/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { MailModule } from './auth/mailer/mailer.module';
-import { TruckDriversModule } from './truck-drivers/truck-drivers.module';
+import { TruckProvidersModule } from './truck-providers/truck-providers.module';
 
 @Module({
   imports: [
@@ -19,7 +19,7 @@ import { TruckDriversModule } from './truck-drivers/truck-drivers.module';
     AuthModule,
     ConfigModule.forRoot(),
     MailModule,
-    TruckDriversModule,
+    TruckProvidersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

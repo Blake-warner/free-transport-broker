@@ -1,12 +1,12 @@
 import { ConflictException, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
-import { UserService } from '../user/user.service';
+import { UserService } from '../users/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { HashingService } from './hashing/hashing.service';
 import jwtConfig from './config/jwt.config';
 import { ConfigType } from '@nestjs/config';
 import { SignupDto } from './dto/signup.dto';
 import { SigninDto } from './dto/signin.dto';
-import { User } from '../user/user.entity';
+import { User } from '../users/user.entity';
 import { ActiveUserData } from './interfaces/active-user-data.interface';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 

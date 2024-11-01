@@ -5,7 +5,6 @@ import { User } from './user/user';
 import { Router } from '@angular/router';
 import { LocalStorageService } from './local-storage.service';
 import { TempUserData } from './user/interfaces/tempUserData.interface';
-import { DomSanitizer } from '@angular/platform-browser';
 import moment from "moment";
 
 interface authUserPayload {
@@ -14,7 +13,6 @@ interface authUserPayload {
   refreshToken: string | null;
   expiresIn: number;
 }
-
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +24,6 @@ export class AuthService {
     private http: HttpClient,
     private router: Router,
     private localStorageService: LocalStorageService,
-    private sanitizer: DomSanitizer
   ) { 
     this.http = new HttpClient(this.handler);
   }
@@ -51,7 +48,6 @@ export class AuthService {
 
   emailVerified(email: string, code: number) {
     console.log(CONSTANTS.EMAIL_VERIFIED_ENDPOINT+'?email='+email+'&code='+code);
-    this.sanitizer.bypassSecurityTrustUrl(CONSTANTS.EMAIL_VERIFIED_ENDPOINT+'?email='+email+'&code='+code);
     return this.http.get(CONSTANTS.EMAIL_VERIFIED_ENDPOINT+'?email='+email+'&code='+code);
   }
 

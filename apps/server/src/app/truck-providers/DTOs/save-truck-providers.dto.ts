@@ -1,17 +1,17 @@
-import { IsNotEmpty, IsPhoneNumber } from "class-validator";
+import { IsNotEmpty } from "class-validator";
 import { ServiceType } from "../enums/service-type.enum";
 
-export class SaveTruckDriverDto {
+export class SaveTruckProvidersDto {
 
     @IsNotEmpty()
-    company_name: string;
+    company: string;
 
     @IsNotEmpty()
-    license_number: string;
+    license: string;
 
     @IsNotEmpty()
-    @IsPhoneNumber()
-    phone_number: string;
+    //@IsPhoneNumber()
+    phone: string;
 
     @IsNotEmpty()
     address: string;
@@ -33,7 +33,6 @@ export class SaveTruckDriverDto {
     }[]
     materials: {
         type: string;
-        unit_for_weight: string;
         price_per_unit: number;
     }[]
 }

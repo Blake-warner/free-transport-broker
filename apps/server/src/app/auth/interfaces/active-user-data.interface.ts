@@ -1,4 +1,4 @@
-import { UserRoles } from "../../user/user-roles";
+import { UserRoles } from "../../users/user-roles";
 
 export interface ActiveUserData {
     sub: number;
