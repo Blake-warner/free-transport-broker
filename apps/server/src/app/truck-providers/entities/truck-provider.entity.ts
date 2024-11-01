@@ -1,10 +1,10 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
-import { User } from "../user/user.entity";
+import { User } from "../../users/user.entity";
 import { Truck } from "./truck.entity";
 import { Material } from "./material.entity";
 
 @Entity()
-export class TruckDriver {
+export class TruckProvider {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -13,13 +13,13 @@ export class TruckDriver {
     user: User;
 
     @Column()
-    company_name: string;
+    company: string;
 
     @Column()
-    license_number: string;
+    license: string;
 
     @Column()
-    phone_number: string;
+    phone: string;
 
     @Column()
     address: string;

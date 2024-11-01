@@ -3,16 +3,25 @@
     width: 100%;
     background: #FFFFFF;
     border: 1px solid #333333;
-    border-radius: 40px;
+    border-radius: 32px;
     color: #333;
     font-style: normal;
     font-weight: 500;
+    height: 50px;
+    font-size: 16px;
 }
 
-button#sign-in {
+.signin-modal input {
+    height: 42px;
+}
+
+#sign-in {
     background: #939393;
     font-style: normal;
     font-weight: 500;
+    height: 50px;
+    border-radius: 32px;
+    font-size: 16px;
 }
 
 #sign-in:hover {
@@ -27,7 +36,7 @@ button#sign-in {
 .google-text {
     display: inline-block;
     position: relative;
-    bottom: 5px;
+    bottom: 7px;
 }
 
 
@@ -35,9 +44,8 @@ button#sign-in {
     width: 168.5px;
     height: 2px;
     background: rgba(102, 102, 102, 0.25);
-    flex: none;
-    order: 0;
-    flex-grow: 1;
+    width: 147.5px;
+
 }
 
 .signin-modal.flex-container.container {
@@ -47,23 +55,26 @@ button#sign-in {
     padding: 26px;
     .flex-item:first-child {
         border-right: 1px solid rgba(102, 102, 102, 0.25);
-        padding-right: 24px;
+        padding-right: 34px;
     }
     .flex-item:last-child {
-        padding-left: 24px;
+        padding-left: 34px;
     }
     .flex-item {
         padding: 10px;
+        width: 50%;
+        box-sizing: border-box;
     }
 }
 
 .dividers.flex-container {
     align-items: center;
+    width: auto;
 }
 
 .or {
-    padding: 0 5px;
-    margin: 0 5px;
+    width: 34px;
+    text-align: center;
 }
 
 .full-bg {
@@ -85,6 +96,8 @@ img {
     border-radius: 32px;
     font-style: normal;
     font-weight: 500;
+    height: 50px;
+    font-size: 16px;
 }
 
 #create-account:hover {

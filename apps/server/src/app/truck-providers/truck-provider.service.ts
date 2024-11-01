@@ -1,14 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { TruckDriver } from './truck-driver.entity';
+import { TruckProvider } from './entities/truck-provider.entity';
 import { Repository } from 'typeorm';
 import { RepositoryService } from '../shared/repository.service';
 
 @Injectable()
-export class TruckDriversService extends RepositoryService {
+export class TruckProvidersService extends RepositoryService {
     constructor(
         @Inject('TRUCK_DRIVERS_REPOSITORY') 
-        private readonly truckDriverRepository: Repository<TruckDriver>
+        private readonly truckProviderRepository: Repository<TruckProvider>
     ) {
-        super(truckDriverRepository);
+        super(truckProviderRepository);
     }
 }

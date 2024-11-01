@@ -1,26 +1,27 @@
 import { DataSource } from 'typeorm';
-import { User } from '../user/user.entity';
+import { User } from '../users/user.entity';
 import { VerifyEmail } from '../auth/verify-email/verify-email.entity';
-import { TruckDriver } from '../truck-drivers/truck-driver.entity';
-import { Truck } from '../truck-drivers/truck.entity';
-import { Material } from '../truck-drivers/material.entity';
-
+import { TruckProvider } from '../truck-providers/entities/truck-provider.entity';
+import { Truck } from '../truck-providers/entities/truck.entity';
+import { Material } from '../truck-providers/entities/material.entity';
+import databaseConfig from './config';
+import { ConfigType } from '@nestjs/config';
 export const databaseProviders = [
     {
         provide: 'DATA_SOURCE',  
-        useFactory: async () => {
+        useFactory: async (config: ConfigType<typeof databaseConfig>) => {
             const dataSource = new DataSource({
-                type: 'mysql',
-                host: 'localhost',
-                port: 3306,
-                username: 'root',
-                password: 'root',
-                database: 'ftb',
+                type: config.type,
+                host: config.host,
+                port: config.port,
+                username: config.username,
+                password: config.password,
+                database: config.name,
                 entities: [
                     __dirname + '/../**/*.entity{.ts,.js}',
                     User,
                     VerifyEmail,
-                    TruckDriver,
+                    TruckProvider,
                     Truck,
                     Material
                 ],
@@ -30,5 +31,6 @@ export const databaseProviders = [
             });
             return await dataSource.initialize();
         },
+        inject: [databaseConfig.KEY]
     }
 ]

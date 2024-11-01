@@ -3,12 +3,32 @@ input.form-control, select.form-control {
     width: 100%;
     border: 1px solid rgba(102, 102, 102, 0.35);
     border-radius: 6px;
-    padding: 14px;
+    height: 34px;
+    padding-left: 8px;
+    padding-right: 0;
+    padding-top: 0;
+    padding-bottom: 0;
     margin-bottom: 12px;
     line-height: 0;
     font-size: 14px;
 }
 
-select::invalid {
-    color: #999999;
-  }
+input:focus, select:focus {
+  outline: none;
+}
+
+input:focus::placeholder {
+  color: transparent;
+}
+
+select {
+  color: #777;
+}
+
+input[type=date] {
+  line-height:normal;
+  color: #777;
+}
+
+/*::-webkit-inner-spin-button { display: none; }
+::-webkit-calendar-picker-indicator { background: orange; }*/

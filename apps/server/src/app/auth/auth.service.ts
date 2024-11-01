@@ -1,12 +1,12 @@
 import { ConflictException, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
-import { UserService } from '../user/user.service';
+import { UserService } from '../users/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { HashingService } from './hashing/hashing.service';
 import jwtConfig from './config/jwt.config';
 import { ConfigType } from '@nestjs/config';
 import { SignupDto } from './dto/signup.dto';
 import { SigninDto } from './dto/signin.dto';
-import { User } from '../user/user.entity';
+import { User } from '../users/user.entity';
 import { ActiveUserData } from './interfaces/active-user-data.interface';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 
@@ -103,7 +103,25 @@ export class AuthService {
         return {
             user,
             accessToken,
+            refreshToken,
+            expiresIn: this.jwtConfiguration.accessTokenTtl
+        }
+    }
+
+    async generateRefreshToken(user: User) {
+        const refreshToken = await Promise.resolve(this.signToken(user.id, this.jwtConfiguration.refreshTokenTtl));
+        return {
+            user,
             refreshToken
+        }
+    }
+
+    async generateAccessToken(user: User) {
+        const accessToken = await Promise.resolve(
+            this.signToken<Partial<ActiveUserData>>(user.id, this.jwtConfiguration.accessTokenTtl, { email: user.email, role: user.role }));
+        return {
+            user,
+            accessToken
         }
     }
 

@@ -1,7 +1,6 @@
 <div class="full-bg">
-    <div class="auth-form-container" [ngClass]="classMap[val]">
+    <div class="auth-form-container signup" [ngClass]="classMap[val]">
         <main id="form-auth" class="w-100 m-auto">
-            <h2 class="h3 mb-2 fw-normal">Please sign up</h2>
             <div class="discount-badge">
                 <img class="discount-badge" alt="First 200 customers get 1 year free" src="assets/images/discount-badge.png"/>
             </div>
@@ -40,7 +39,7 @@
                     <label for="full_name">Full Name</label>
                     <input type="text" name="full_name" ngModel class="form-control" id="floatingText"/>
                 </div>
-                <button type="submit" [ngClass]="f.invalid ? 'invalid' : ''"[disabled]="f.invalid" >Sign up</button>
+                <button type="submit" [ngClass]="f.invalid ? 'invalid' : ''"[disabled]="f.invalid" >Sign up now</button>
             </form>
         </main>
         <main id="form-email-code" class="w-100 m-auto">

@@ -1,6 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormArray, FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, RequiredValidator, Validators } from '@angular/forms';
+import { TruckProvidersService } from '../../shared/trucking-providers/truck-providers.service';
+import { TruckProvider } from '../../shared/trucking-providers/models/truck-provider.model';
+import { TruckType } from '../../shared/trucking-providers/models/truck-type.model';
+import { Material } from '../../shared/trucking-providers/models/material.model';
+import * as CONSTANTS from '../../shared/trucking-providers/truck-provider.constants';
+
 @Component({
   selector: 'app-join-network',
   standalone: true,
@@ -10,27 +16,29 @@ import { FormArray, FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsMo
 })
 export class JoinNetworkComponent implements OnInit {
 
-  constructor() {
+  constructor(private readonly truckProvidersService: TruckProvidersService) {
     console.log(this.truckDriverForm.value);
   }
 
   public truckItems!: {id: number, name: string}[];
+  @ViewChild('creditCardNumber') creditCardNumber!: ElementRef;
 
   ngOnInit() {
     this.truckItems = [];
+      console.log(CONSTANTS.SAVE_TRUCK_PROVIDER);
   }
 
   truckTypesGrp = new FormGroup({
     truckType: new FormControl(''),
-    loadCapacity: new FormControl(''),
-    serviceType: new FormControl(''),
+    //loadCapacity: new FormControl(''),
+    //serviceType: new FormControl(''),
     pricePerMile: new FormControl('')
   });
 
   truckDriverForm = new FormGroup({
     // Comany section
-    company: new FormControl(''),
-    license: new FormControl(''),
+    company: new FormControl('', Validators.required),
+    license: new FormControl('', Validators.required),
     address: new FormControl(''),
     phone: new FormControl(''),
     city: new FormControl(''),
@@ -44,6 +52,7 @@ export class JoinNetworkComponent implements OnInit {
       this.createMaterialItem()
     ]),
     // Payment Info
+    name: new FormControl(''),
     cardNumber: new FormControl(''),
     expDate: new FormControl(''),
     securityCode: new FormControl(''),
@@ -57,18 +66,42 @@ export class JoinNetworkComponent implements OnInit {
   createTruckItem(): FormGroup {
     return new FormGroup({
       truckType: new FormControl(''),
-      loadCapacity: new FormControl(''),
-      serviceType: new FormControl(''),
+      //loadCapacity: new FormControl(''),
+      //serviceType: new FormControl(''),
       pricePerMile: new FormControl(''),
     });
   }
 
   createMaterialItem(): FormGroup {
     return new FormGroup({
-      materials: new FormControl(''),
-      unitForWeight: new FormControl(''),
+      name: new FormControl(''),
+      //unitForWeight: new FormControl(''),
       pricePerUnit: new FormControl(''),
     });
+  }
+
+  onSubmit() {
+    console.log('this is second: ', this.truckDriverForm.value);
+    const truckProvider = new TruckProvider(
+      this.truckDriverForm.value.company as string,
+      this.truckDriverForm.value.license as string,
+      this.truckDriverForm.value.phone as string,
+      this.truckDriverForm.value.address as string,
+      this.truckDriverForm.value.city as string,
+      this.truckDriverForm.value.zip as string,
+      this.truckDriverForm.value.state as string,
+      this.truckDriverForm.value.truckTypesArr as TruckType[],
+      this.truckDriverForm.value.materialsArr as Material[],
+      {
+        name: this.truckDriverForm.value.name as string,
+        cardNumber: this.truckDriverForm.value.cardNumber as string,
+        expDate: this.truckDriverForm.value.expDate as string,
+        securityCode: this.truckDriverForm.value.securityCode as string
+      }
+    );
+    this.truckProvidersService.saveProvider(truckProvider).subscribe((response) => {
+      console.log(response);
+    })
   }
 
   getTruckItems(): FormArray {
@@ -97,13 +130,20 @@ export class JoinNetworkComponent implements OnInit {
 
   public states = ['Alabama','Alaska','American Samoa','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Federated States of Micronesia','Florida','Georgia','Guam','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Marshall Islands','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Northern Mariana Islands','Ohio','Oklahoma','Oregon','Palau','Pennsylvania','Puerto Rico','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virgin Island','Virginia','Washington','West Virginia','Wisconsin','Wyoming']
   
-  public trucks = ['Truck A', 'Truck B', 'Truck C', 'Truck D'];
-  public loadCapacity = ['Load Capacity', '1 Ton', '5 Tons', '10 Tons', '15 Tons', '20 Tons', '25 Tons'];
-  public serviceTypes = ['Delivery', 'Demo', 'All'];
+  public trucks = ['3 Axle Gooseneck dump trailer (7-9 tons)', 'Bobtail single axle trailer dump truck (8-9 tons)', 'Flatbed roll-off dump truck (10-13 tons)', 'Ten wheeler dump truck (12-15 tons)', 'standard non transfer dump truck (13-16 tons)', 'super dump w/ pusher axle dropdown dump truck (15-18 tons)'];
+  public loadCapacity = ['1 Ton', '5 Tons', '10 Tons', '15 Tons', '20 Tons', '25 Tons'];
+  public serviceTypes = ['Material', 'Demo', 'Material/Demo'];
 
   public materials = ['Aggregate', 'Concrete', 'Sand', 'Dirt', 'Rock'];
   public unitForWeight = ['Pounds', 'Kilo tons'];
-  onSubmit(form: NgForm) {
-    console.log(form.value);
+
+  formatCreditCardNumber(event: any) {
+    console.log(event.target.value);
+    const formattedInputNumber = event.target.value.replaceAll(" ", "");
+    const formattedOutputNumber = formattedInputNumber.split("").reduce((seed: string, next: string, index: number) => {
+      if (index !== 0 && !(index % 4)) seed += " ";
+      return seed + next;
+    }, "");
+    this.creditCardNumber.nativeElement.value = formattedOutputNumber;
   }
 }

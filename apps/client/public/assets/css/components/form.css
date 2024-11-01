@@ -6,3 +6,7 @@
 .form-array-item:first-child {
     border: none;
 }
+
+.form-floating {
+    position:relative;
+}

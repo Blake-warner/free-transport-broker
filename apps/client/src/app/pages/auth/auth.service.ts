@@ -5,14 +5,14 @@ import { User } from './user/user';
 import { Router } from '@angular/router';
 import { LocalStorageService } from './local-storage.service';
 import { TempUserData } from './user/interfaces/tempUserData.interface';
-import { DomSanitizer } from '@angular/platform-browser';
+import moment from "moment";
 
 interface authUserPayload {
   user: User;
   accessToken: string | null;
   refreshToken: string | null;
+  expiresIn: number;
 }
-
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +23,7 @@ export class AuthService {
     private handler: HttpBackend,
     private http: HttpClient,
     private router: Router,
-    private locaStorageService: LocalStorageService,
-    private sanitizer: DomSanitizer
+    private localStorageService: LocalStorageService,
   ) { 
     this.http = new HttpClient(this.handler);
   }
@@ -49,33 +48,50 @@ export class AuthService {
 
   emailVerified(email: string, code: number) {
     console.log(CONSTANTS.EMAIL_VERIFIED_ENDPOINT+'?email='+email+'&code='+code);
-    this.sanitizer.bypassSecurityTrustUrl(CONSTANTS.EMAIL_VERIFIED_ENDPOINT+'?email='+email+'&code='+code);
     return this.http.get(CONSTANTS.EMAIL_VERIFIED_ENDPOINT+'?email='+email+'&code='+code);
   }
 
-  setLogoutTimer(expDuration: number) {
-    this.accessTokenExpTimer = setTimeout(() => {
-      //
-    }, expDuration);
+  logout() {
+    this.localStorageService.removeItem('authTokens');
+    this.localStorageService.removeItem('expires_at');
+    this.localStorageService.removeItem('user');
   }
 
-  clearLogoutTimer() {
-    if (this.accessTokenExpTimer) {
-      clearTimeout(this.accessTokenExpTimer);
-      this.accessTokenExpTimer = null;
-    }
+  refreshToken() {
+    const tokens = this.localStorageService.getItem('authTokens') as string;
+    const refreshToken = JSON.parse(tokens).refreshToken;
+    return this.http.post<authUserPayload>(CONSTANTS.REFRESH_TOKENS_ENDPOINT, refreshToken);
+  }
+
+  public isLoggedIn() {
+    return moment().isBefore(this.getExpiration());
+  }
+
+  isLoggedOut() {
+    return !this.isLoggedIn();
+  }
+
+  getExpiration() {
+    const exp = this.localStorageService.getItem('expires_at') as string;
+    const expiresAt = JSON.parse(exp);
+    return moment(expiresAt);
+  }
+
+  getAccessToken() {
+    let accessToken = this.localStorageService.getItem('authTokens') as string;
+    accessToken = JSON.parse(accessToken).accessToken;
+    return accessToken;
   }
 
   handleAuthentication(payload: authUserPayload) {
-    console.log(payload);
     const authTokens = {
       accessToken: payload.accessToken,
       refreshToken: payload.refreshToken,
     };
-    const date = new Date(Date.now());
-    this.locaStorageService.setItem('user', JSON.stringify(payload.user));
-    this.locaStorageService.setItem('authTokens', JSON.stringify(authTokens));
-    this.locaStorageService.setItem('date', JSON.stringify(date));
+    const expiresAt = moment().add(payload.expiresIn,'second');
+    this.localStorageService.setItem('user', JSON.stringify(payload.user));
+    this.localStorageService.setItem('authTokens', JSON.stringify(authTokens));
+    this.localStorageService.setItem('expires_at', JSON.stringify(expiresAt.valueOf()));
     this.router.navigate(['/join-network']);
   }
 

@@ -3,14 +3,15 @@ import { AuthService } from './auth.service';
 import { SignupDto } from './dto/signup.dto';
 import { VerifyEmailService } from './verify-email/verify-email.service';
 import { EmailDto } from './dto/email.dto';
-import { UserService } from '../user/user.service';
-import { User } from '../user/user.entity';
+import { UserService } from '../users/user.service';
+import { User } from '../users/user.entity';
 import { MailService } from './mailer/mailer.service';
 import { ConfigService } from '@nestjs/config';
 import { SigninDto } from './dto/signin.dto';
 import * as CONSTANTS from '../shared/constants';
 import { Auth } from './decorators/auth.decorator';
 import { AuthType } from './enums/auth-type.enum';
+import { RefreshTokenDto } from './dto/refresh-token.dto';
 
 @Auth(AuthType.None)
 @Controller(CONSTANTS.versions)
@@ -80,4 +81,10 @@ export class AuthController {
         }
         return true;
     }
+
+    @Post('refresh-token')
+    refreshTokens(@Body() refreshTokenDto: RefreshTokenDto) {
+        return this.authService.refreshTokens(refreshTokenDto);
+    }
+    
 }

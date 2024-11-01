@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from '../database/database.module';
 import { SharedModule } from '../shared/shared.module';
-import { UserModule } from '../user/user.module';
+import { UserModule } from '../users/user.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import jwtConfig from './config/jwt.config';
 import { VerifyEmailService } from './verify-email/verify-email.service';

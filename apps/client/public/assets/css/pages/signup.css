@@ -4,6 +4,29 @@
     box-sizing: border-box;
 }
 
+.signup input {
+    height: 42px;
+    margin-bottom: 20px;
+}
+
+.signup .alert {
+    position: absolute;
+    bottom: -9px;
+    font-size: 14px;
+}
+
+.signup button {
+    border-radius: 32px;
+    height: 50px;
+    font-size: 16px;
+    font-weight: 500;
+    background-color: black;
+}
+
+.signup button:hover {
+    background: rgba(0,0,0, .75);
+}
+
 .auth-form-container.show-email-code {
     #form-auth {
         opacity: 0;
@@ -74,11 +97,11 @@
     width: 100%;
     position: absolute;
     margin: auto;
-    max-width: 400px;
+    max-width: 440px;
     top: 50%;
     left: 50%;
     background: #fff;
-    padding: 20px;
+    padding: 30px;
     border-radius: 20px;
 }
 
@@ -104,4 +127,8 @@
 
 input.form-control {
     padding: 10px;
+}
+
+.signup img {
+    margin-top: 0;
 }

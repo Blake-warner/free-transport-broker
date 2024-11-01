@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { ServiceType } from "./enums/service-type.enum";
+import { ServiceType } from "../enums/service-type.enum";
 
 @Entity()
 export class Truck {
@@ -11,12 +11,15 @@ export class Truck {
     type: string;
 
     @Column()
-    load_capacity: string;
+    min_capacity: number;
+
+    @Column()
+    max_capacity: number;
 
     @Column({
         type: "enum",
         enum: ServiceType,
-        default: ServiceType.All
+        default: ServiceType.Material_and_Demo
     })
     service_type: string;
 

@@ -77,7 +77,7 @@ export class SignupComponent implements OnInit {
     });
   }
 
-  validateDigits(event: any ) {
+  validateDigits(event: any) {
     const inputDigit = Number(event.key);
     const chars = event.target.name.split("");
     const digit = chars.splice(1,1);
