@@ -22,6 +22,7 @@ export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) 
         return authService.refreshToken().pipe(
           switchMap((response) => {
             const newAccessToken = response.accessToken;
+            console.log('New Access Token being Created!!!!');
             req = req.clone({
               setHeaders: {
                 Authorization: `Bearer ${newAccessToken}`
@@ -32,6 +33,7 @@ export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) 
           })
         );
       } else {
+        console.log('Error gets thrown here for expired token!');
         throw error;
       }
     })
