@@ -1,6 +1,6 @@
 import { PaymentInfo } from "../../models/payment-info.model";
 import { Material } from "./material.model";
-import { TruckType } from "./truck-type.model";
+import { TruckType } from "../../trucks/truck-type.model";
 
 export class TruckProvider {
         constructor (

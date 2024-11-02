@@ -69,8 +69,10 @@ export class AuthService {
                 }
             );
             const user = await this.userService.findOneByOrFail(sub) as User;
+            console.log('aetghsbfggarebtgs: ', user);
             return this.generateTokens(user);
         } catch(err)  {
+            console.log('jwt token expired not good anymroe')
             throw new UnauthorizedException(err)
         }
     }

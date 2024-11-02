@@ -10,7 +10,7 @@ export class TruckProvidersService{
 
   constructor(private httpClient: HttpClient) { }
   saveProvider(provider: TruckProvider) {
-    return this.httpClient.post(CONSTANTS.SAVE_TRUCK_PROVIDER, provider)
+    return this.httpClient.post(CONSTANTS.SAVE_TRUCK_PROVIDER, provider);
   }
 
 }

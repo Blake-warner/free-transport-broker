@@ -3,9 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, RequiredValidator, Validators } from '@angular/forms';
 import { TruckProvidersService } from '../../shared/trucking-providers/truck-providers.service';
 import { TruckProvider } from '../../shared/trucking-providers/models/truck-provider.model';
-import { TruckType } from '../../shared/trucking-providers/models/truck-type.model';
+import { TruckType } from '../../shared/trucks/truck-type.model';
 import { Material } from '../../shared/trucking-providers/models/material.model';
 import * as CONSTANTS from '../../shared/trucking-providers/truck-provider.constants';
+import { TrucksService } from '../../shared/trucks/trucks.service';
 
 @Component({
   selector: 'app-join-network',
@@ -16,7 +17,10 @@ import * as CONSTANTS from '../../shared/trucking-providers/truck-provider.const
 })
 export class JoinNetworkComponent implements OnInit {
 
-  constructor(private readonly truckProvidersService: TruckProvidersService) {
+  constructor(
+    private readonly truckProvidersService: TruckProvidersService,
+    private readonly trucksService: TrucksService
+  ) {
     console.log(this.truckDriverForm.value);
   }
 
@@ -26,6 +30,9 @@ export class JoinNetworkComponent implements OnInit {
   ngOnInit() {
     this.truckItems = [];
       console.log(CONSTANTS.SAVE_TRUCK_PROVIDER);
+      this.trucksService.getTrucks().subscribe((response) => {
+        console.log(response)
+      });
   }
 
   truckTypesGrp = new FormGroup({
