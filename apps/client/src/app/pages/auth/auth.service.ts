@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { LocalStorageService } from './local-storage.service';
 import { TempUserData } from './user/interfaces/tempUserData.interface';
 import moment from "moment";
+import * as jwt_decode from 'jwt-decode';
 
 interface authUserPayload {
   user: User;
@@ -81,6 +82,15 @@ export class AuthService {
     let accessToken = this.localStorageService.getItem('authTokens') as string;
     accessToken = JSON.parse(accessToken).accessToken;
     return accessToken;
+  }
+
+  decodeToken(jwtToken: string) {
+    try {
+      return jwt_decode.jwtDecode(jwtToken);
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      return null;
+    }
   }
 
   handleAuthentication(payload: authUserPayload) {
