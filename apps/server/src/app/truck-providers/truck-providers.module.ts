@@ -4,6 +4,7 @@ import { TruckProvidersController } from './truck-providers.controller';
 import { truckDriversProvider } from './truck-providers.provider';
 import { DatabaseModule } from '../database/database.module';
 import { SharedModule } from '../shared/shared.module';
+import { ProviderTrucksService } from './provider-trucks.service';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { SharedModule } from '../shared/shared.module';
   ],
   providers: [
     TruckProvidersService,
+    ProviderTrucksService,
     ...truckDriversProvider
   ],
   controllers: [TruckProvidersController],

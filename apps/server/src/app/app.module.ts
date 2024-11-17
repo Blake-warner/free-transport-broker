@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { MailModule } from './auth/mailer/mailer.module';
 import { TruckProvidersModule } from './truck-providers/truck-providers.module';
+import { TrucksModule } from './trucks/trucks.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { TruckProvidersModule } from './truck-providers/truck-providers.module';
     ConfigModule.forRoot(),
     MailModule,
     TruckProvidersModule,
+    TrucksModule,
   ],
   controllers: [AppController],
   providers: [AppService],

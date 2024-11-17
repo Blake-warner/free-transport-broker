@@ -13,12 +13,17 @@ services:
     image: server
     ports:
       - 3000:3000
-  #database:
-    #image: postgres
-   # restart: always
-   # volumes:
-    #  - ./data:/var/lib/postgresql/data
-   # ports:
-   #   - "5432:5432"
-   # environment:
-    #  - POSTGRES_PASSWORD=pass123
+    depends_on:
+    - database
+    
+  database:
+    image: arm64v8/mysql
+    restart: always
+    volumes:
+      - ./data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_USER=root

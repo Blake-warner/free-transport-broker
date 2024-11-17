@@ -18,7 +18,7 @@ export class TruckProvidersController {
     @Post('save-provider')
     @HttpCode(HttpStatus.OK)
     saveTruckProviders(@Body() saveTruckProvidersDto: SaveTruckProvidersDto) {
-        console.log('wtf: ', saveTruckProvidersDto);
+        console.log('truck provider: ', saveTruckProvidersDto);
         return this.truckProvidersService.save(saveTruckProvidersDto);
     }
 

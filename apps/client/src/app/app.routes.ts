@@ -7,7 +7,7 @@ import { authGuard } from './pages/auth/auth.guard';
 
 export const appRoutes: Route[] = [
     //{ path: '', redirectTo: 'signin', pathMatch: 'full' }, // temporary for initial launch of website
-    { path: '', component: HomeComponent, canActivate: [authGuard]},
+    //{ path: '', component: HomeComponent, canActivate: [authGuard]},
     { path: '',
         loadChildren: () =>
         import('./home/home.routes')
@@ -15,5 +15,5 @@ export const appRoutes: Route[] = [
     },
     { path: 'signup', component: SignupComponent },
     { path: 'signin', component: SigninComponent },
-    { path: 'join-network', component: JoinNetworkComponent}
+    //{ path: 'join-network', component: JoinNetworkComponent}
 ];

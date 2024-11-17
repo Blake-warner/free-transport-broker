@@ -1,16 +1,13 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "../../users/user.entity";
-import { Truck } from "./truck.entity";
-import { Material } from "./material.entity";
+import { Truck } from "../../trucks/truck.entity";
+//import { Truck } from "../../trucks/truck.entity";
+//import { Material } from "./material.entity";
 
 @Entity()
 export class TruckProvider {
     @PrimaryGeneratedColumn()
     id: number;
-
-    @OneToOne(() => User)
-    @JoinColumn()
-    user: User;
 
     @Column()
     company: string;
@@ -33,10 +30,49 @@ export class TruckProvider {
     @Column()
     state: string;
 
-    @ManyToOne(() => Truck)
-    trucks: Truck[]
+    /*@Column("double")
+    pricePerMile: number;*/
 
-    @ManyToOne(() => Material)
-    materials: Material[]
+    //@Column({type: "simple-array", select: false})
+    //paymentInfo: string[]
+
+    @OneToOne(() => User, (user) => user.id)
+    @JoinColumn()
+    user: User;
+
+    @Column()
+    cardholderName: string;
+
+    @Column()
+    cardNumber: string;
+
+    @Column()
+    expDate: string;
+
+    @Column()
+    securityCode: string;
+
+    @ManyToMany(() => Truck, (truck) => truck.id)
+    @JoinTable({
+        name: 'provider_trucks',
+        joinColumn: {
+          name: 'userId',
+          referencedColumnName: 'id',
+        },
+        inverseJoinColumn: {
+          name: 'truckId',
+          referencedColumnName: 'id',
+        },
+    })
+    trucks: Truck[];
+
+    @Column()
+    comments: string;
+
+    /*@ManyToMany(() => Material, (material) => material.id)
+    @JoinTable({
+        name: 'provider_materials'
+    })
+    materials: Material[]*/
 
 }

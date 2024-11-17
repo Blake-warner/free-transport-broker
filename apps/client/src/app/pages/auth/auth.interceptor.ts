@@ -18,6 +18,8 @@ export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) 
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
+      console.log(error);
+      console.log('auth interceptor catching error but not 401');
       if (error.status === 401) {
         return authService.refreshToken().pipe(
           switchMap((response) => {
@@ -34,7 +36,8 @@ export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) 
         );
       } else {
         console.log('Error gets thrown here for expired token!');
-        throw error;
+        return next(req);
+        //throw error;
       }
     })
   );

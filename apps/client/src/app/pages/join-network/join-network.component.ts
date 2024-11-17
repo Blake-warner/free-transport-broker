@@ -1,12 +1,24 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, RequiredValidator, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TruckProvidersService } from '../../shared/trucking-providers/truck-providers.service';
 import { TruckProvider } from '../../shared/trucking-providers/models/truck-provider.model';
-import { TruckType } from '../../shared/trucks/truck-type.model';
-import { Material } from '../../shared/trucking-providers/models/material.model';
+//import { TruckType } from '../../shared/trucks/truck-type.model';
+//import { Material } from '../../shared/trucking-providers/models/material.model';
 import * as CONSTANTS from '../../shared/trucking-providers/truck-provider.constants';
 import { TrucksService } from '../../shared/trucks/trucks.service';
+import { Truck } from '../../shared/trucks/truck.inteface';
+import { LocalStorageService } from '../auth/local-storage.service';
+import { User } from '../auth/user/user';
+import { Material } from '../../shared/trucking-providers/models/material.model';
+import { Roles } from '../auth/user/roles.enum';
+
+interface PaymentInfo {
+  name: string,
+  cardNumber: string,
+  expDate: string,
+  securityCode: string
+}
 
 @Component({
   selector: 'app-join-network',
@@ -19,26 +31,35 @@ export class JoinNetworkComponent implements OnInit {
 
   constructor(
     private readonly truckProvidersService: TruckProvidersService,
-    private readonly trucksService: TrucksService
+    private readonly trucksService: TrucksService,
+    private readonly localStorageService: LocalStorageService 
   ) {
-    console.log(this.truckDriverForm.value);
+    console.log('form fields ', this.truckDriverForm.value);
   }
 
-  public truckItems!: {id: number, name: string}[];
+  public truckArr: Truck[] = [];
+  public trucks: {id: number, type: string}[] = [];
+  public truckItems: Truck[] = [];
   @ViewChild('creditCardNumber') creditCardNumber!: ElementRef;
+  public currentUser: User | undefined;
 
   ngOnInit() {
     this.truckItems = [];
-      console.log(CONSTANTS.SAVE_TRUCK_PROVIDER);
-      this.trucksService.getTrucks().subscribe((response) => {
-        console.log(response)
+      console.log(CONSTANTS.FETCH_TRUCKS);
+      this.trucksService.getTrucks().subscribe((response: Truck[]) => {
+        this.truckArr = response;
+        this.trucks = response.map((truck) => {
+          return {
+            id: truck.id,
+            type: truck.type,
+          }
+        });
       });
+      this.currentUser = JSON.parse(this.localStorageService.getItem('user') as string);
   }
 
   truckTypesGrp = new FormGroup({
     truckType: new FormControl(''),
-    //loadCapacity: new FormControl(''),
-    //serviceType: new FormControl(''),
     pricePerMile: new FormControl('')
   });
 
@@ -51,6 +72,7 @@ export class JoinNetworkComponent implements OnInit {
     city: new FormControl(''),
     zip: new FormControl(''),
     state: new FormControl(''),
+    //pricePerMile: new FormControl(''),
     // Truck section
     truckTypesArr: new FormArray([
       this.createTruckItem()
@@ -59,22 +81,23 @@ export class JoinNetworkComponent implements OnInit {
       this.createMaterialItem()
     ]),
     // Payment Info
-    name: new FormControl(''),
+    cardholderName: new FormControl(''),
     cardNumber: new FormControl(''),
     expDate: new FormControl(''),
     securityCode: new FormControl(''),
+    experience: new FormControl(''),
+    // comments
+    comments: new FormControl('')
   });
-
+/*
   addTruck(item: {id: number, name: string}) {
     this.truckItems.push(item);
     console.log(item);
   }
-
+*/
   createTruckItem(): FormGroup {
     return new FormGroup({
       truckType: new FormControl(''),
-      //loadCapacity: new FormControl(''),
-      //serviceType: new FormControl(''),
       pricePerMile: new FormControl(''),
     });
   }
@@ -88,7 +111,19 @@ export class JoinNetworkComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('this is second: ', this.truckDriverForm.value);
+    console.log('submitted form value: ', this.truckDriverForm.value);
+    this.truckDriverForm.value.truckTypesArr?.map((truckType) => {
+      console.log(truckType);
+      const truckObj = this.truckArr.find((truck) => truck.id === Number(truckType.truckType)) as Truck;
+      console.log(truckObj);
+      Object.defineProperty(truckObj, 'price_per_mile', {
+        value: truckType.pricePerMile,
+        enumerable: true,
+        writable: true
+      });
+      this.truckItems.push(truckObj);
+    });
+    console.log(this.truckArr);
     const truckProvider = new TruckProvider(
       this.truckDriverForm.value.company as string,
       this.truckDriverForm.value.license as string,
@@ -97,18 +132,19 @@ export class JoinNetworkComponent implements OnInit {
       this.truckDriverForm.value.city as string,
       this.truckDriverForm.value.zip as string,
       this.truckDriverForm.value.state as string,
-      this.truckDriverForm.value.truckTypesArr as TruckType[],
-      this.truckDriverForm.value.materialsArr as Material[],
-      {
-        name: this.truckDriverForm.value.name as string,
-        cardNumber: this.truckDriverForm.value.cardNumber as string,
-        expDate: this.truckDriverForm.value.expDate as string,
-        securityCode: this.truckDriverForm.value.securityCode as string
-      }
+      this.currentUser as User,
+      this.truckDriverForm.value.cardholderName as string,
+      this.truckDriverForm.value.cardNumber as string,
+      this.truckDriverForm.value.expDate as string,
+      this.truckDriverForm.value.securityCode as string,
+      this.truckDriverForm.value.comments as string,
+      this.truckItems,
+      //this.truckDriverForm.value.materialsArr as Material[],
     );
+    console.log(truckProvider);
     this.truckProvidersService.saveProvider(truckProvider).subscribe((response) => {
       console.log(response);
-    })
+    });
   }
 
   getTruckItems(): FormArray {
@@ -136,8 +172,6 @@ export class JoinNetworkComponent implements OnInit {
   }
 
   public states = ['Alabama','Alaska','American Samoa','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Federated States of Micronesia','Florida','Georgia','Guam','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Marshall Islands','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Northern Mariana Islands','Ohio','Oklahoma','Oregon','Palau','Pennsylvania','Puerto Rico','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virgin Island','Virginia','Washington','West Virginia','Wisconsin','Wyoming']
-  
-  public trucks = ['3 Axle Gooseneck dump trailer (7-9 tons)', 'Bobtail single axle trailer dump truck (8-9 tons)', 'Flatbed roll-off dump truck (10-13 tons)', 'Ten wheeler dump truck (12-15 tons)', 'standard non transfer dump truck (13-16 tons)', 'super dump w/ pusher axle dropdown dump truck (15-18 tons)'];
   public loadCapacity = ['1 Ton', '5 Tons', '10 Tons', '15 Tons', '20 Tons', '25 Tons'];
   public serviceTypes = ['Material', 'Demo', 'Material/Demo'];
 

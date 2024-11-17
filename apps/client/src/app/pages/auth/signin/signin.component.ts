@@ -27,6 +27,7 @@ export class SigninComponent {
     this.authService.signin(payload).pipe(
       catchError(err => of(err))
     ).subscribe((authResponse) => {
+      console.log(authResponse);
       this.authService.handleAuthentication(authResponse);
     })
   }

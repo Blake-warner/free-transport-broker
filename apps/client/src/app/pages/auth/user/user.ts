@@ -1,4 +1,3 @@
-import { Payment } from "./interfaces/payment.interface";
 import { Roles } from "./roles.enum";
 
 export class User {
@@ -6,6 +5,5 @@ export class User {
         public email: string,
         public fullName: string,
         public role: Roles,
-        private payment: Payment,
     ) {}
 }

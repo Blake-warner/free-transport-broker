@@ -1,5 +1,5 @@
 export enum Roles {
-    TruckDriver = 'truckDriver',
+    provider = 'provider',
     HomeOwner = 'homeOwner',
     Contractor = 'contractor'
 }
