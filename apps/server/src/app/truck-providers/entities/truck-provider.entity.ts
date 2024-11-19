@@ -56,7 +56,7 @@ export class TruckProvider {
     @JoinTable({
         name: 'provider_trucks',
         joinColumn: {
-          name: 'userId',
+          name: 'providerId',
           referencedColumnName: 'id',
         },
         inverseJoinColumn: {

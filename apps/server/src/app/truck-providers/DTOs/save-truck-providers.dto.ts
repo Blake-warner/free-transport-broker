@@ -27,7 +27,7 @@ export class SaveTruckProvidersDto {
     @IsNotEmpty()
     state: string;
 
-    user: User;
+    //user: User;
 
     cardholderName: string;
 

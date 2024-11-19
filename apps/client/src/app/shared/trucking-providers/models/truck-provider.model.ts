@@ -15,7 +15,7 @@ export class TruckProvider {
             public state: string,
             //public pricePerMile: number,
             //public paymentInfo: PaymentInfo,
-            public user: User,
+            //public user: User,
             public cardholderName: string,
             public cardNumber: string,
             public expDate: string,

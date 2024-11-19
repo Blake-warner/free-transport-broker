@@ -11,14 +11,6 @@ import { Truck } from '../../shared/trucks/truck.inteface';
 import { LocalStorageService } from '../auth/local-storage.service';
 import { User } from '../auth/user/user';
 import { Material } from '../../shared/trucking-providers/models/material.model';
-import { Roles } from '../auth/user/roles.enum';
-
-interface PaymentInfo {
-  name: string,
-  cardNumber: string,
-  expDate: string,
-  securityCode: string
-}
 
 @Component({
   selector: 'app-join-network',
@@ -72,7 +64,6 @@ export class JoinNetworkComponent implements OnInit {
     city: new FormControl(''),
     zip: new FormControl(''),
     state: new FormControl(''),
-    //pricePerMile: new FormControl(''),
     // Truck section
     truckTypesArr: new FormArray([
       this.createTruckItem()
@@ -89,12 +80,7 @@ export class JoinNetworkComponent implements OnInit {
     // comments
     comments: new FormControl('')
   });
-/*
-  addTruck(item: {id: number, name: string}) {
-    this.truckItems.push(item);
-    console.log(item);
-  }
-*/
+
   createTruckItem(): FormGroup {
     return new FormGroup({
       truckType: new FormControl(''),
@@ -132,7 +118,6 @@ export class JoinNetworkComponent implements OnInit {
       this.truckDriverForm.value.city as string,
       this.truckDriverForm.value.zip as string,
       this.truckDriverForm.value.state as string,
-      this.currentUser as User,
       this.truckDriverForm.value.cardholderName as string,
       this.truckDriverForm.value.cardNumber as string,
       this.truckDriverForm.value.expDate as string,

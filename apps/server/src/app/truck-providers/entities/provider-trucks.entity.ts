@@ -14,7 +14,7 @@ export class ProviderTrucks {
     @Column()
     @IsNotEmpty()
     @PrimaryColumn()
-    userId: number;
+    providerId: number;
 
     @Column()
     @IsNotEmpty()

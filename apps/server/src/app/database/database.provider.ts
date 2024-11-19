@@ -24,11 +24,10 @@ export const databaseProviders = [
                     VerifyEmail,
                     TruckProvider,
                     Truck,
-                    Material,
                     ProviderTrucks
                 ],
                 ssl: false,
-                synchronize: true,
+                synchronize: false,
                 logging: true,
             });
             return await dataSource.initialize();
