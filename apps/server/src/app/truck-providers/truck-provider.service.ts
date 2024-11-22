@@ -2,9 +2,11 @@ import { Inject, Injectable } from '@nestjs/common';
 import { TruckProvider } from './entities/truck-provider.entity';
 import { Repository } from 'typeorm';
 import { RepositoryService } from '../shared/repository.service';
+//import { SaveTruckProvidersDto } from './DTOs/save-truck-providers.dto';
+//import { ProviderTrucks } from './entities/provider-trucks.entity';
+import { ProviderTrucksService } from './provider-trucks.service';
 import { SaveTruckProvidersDto } from './DTOs/save-truck-providers.dto';
 import { ProviderTrucks } from './entities/provider-trucks.entity';
-import { ProviderTrucksService } from './provider-trucks.service';
 
 @Injectable()
 export class TruckProvidersService extends RepositoryService {
@@ -16,8 +18,10 @@ export class TruckProvidersService extends RepositoryService {
         super(truckProviderRepository);
     }
 
-    /*saveProvider(saveTruckProvidersDto: SaveTruckProvidersDto) {
+   /* saveProvider(saveTruckProvidersDto: SaveTruckProvidersDto) {
+        this.save()
         const providerTruck: ProviderTrucks = saveTruckProvidersDto.trucks
         this.providerTrucksRepository.save('val');
-    }*/
+    }
+        */
 }

@@ -4,6 +4,7 @@ import { catchError, switchMap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 
 export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) {
+  console.log('Interceptor is fired!');
   // Inject the current `AuthService` and use it to get an authentication token:
   const authService = inject(AuthService);
   //const accessToken = authService.getAccessToken();

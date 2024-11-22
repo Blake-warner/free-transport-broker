@@ -15,6 +15,10 @@ export const SIGNIN_ENDPOINT = HOST + ':' + API_PORT + API_PREFIX + VERSION + AU
 export const VALIDATED_USER_ENDPOINT = HOST + ':' + API_PORT + API_PREFIX + VERSION + VALIDATED_USER;
 export const REFRESH_TOKENS_ENDPOINT = HOST + ':' + API_PORT + API_PREFIX + VERSION + REFRESH_TOKENS;
 
+// User
+export const UPDATE_USER = '/update-user';
+export const UPDATE_USER_ENDPOINT = HOST + ':' + API_PORT + API_PREFIX + VERSION + UPDATE_USER;
+
 // Mailer
 export const VERIFY_EMAIL = '/verify-email';
 export const EMAIL_VERIFIED = '/email-verified';

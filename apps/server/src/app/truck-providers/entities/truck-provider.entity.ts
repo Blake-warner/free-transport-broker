@@ -1,8 +1,6 @@
 import { Column, Entity, JoinColumn, JoinTable, ManyToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "../../users/user.entity";
 import { Truck } from "../../trucks/truck.entity";
-//import { Truck } from "../../trucks/truck.entity";
-//import { Material } from "./material.entity";
 
 @Entity()
 export class TruckProvider {
@@ -36,9 +34,9 @@ export class TruckProvider {
     //@Column({type: "simple-array", select: false})
     //paymentInfo: string[]
 
-    @OneToOne(() => User, (user) => user.id)
-    @JoinColumn()
-    user: User;
+    //@OneToOne(() => User, (user) => user.id)
+    //@JoinColumn()
+    //user: User;
 
     @Column()
     cardholderName: string;
