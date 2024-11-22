@@ -23,7 +23,8 @@ export class AppComponent implements OnInit{
   constructor(private readonly localstorageService: LocalStorageService, private readonly authService: AuthService){}
 
   ngOnInit() {
-   console.log('onit');
-   console.log('logged out? ',this.authService.isLoggedOut());
+    if(this.authService.isLoggedOut()) {
+      this.authService.logout();
+    }
   }
 }

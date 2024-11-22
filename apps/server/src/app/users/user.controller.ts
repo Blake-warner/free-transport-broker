@@ -1,6 +1,7 @@
-import { Body, Controller, Get, UnauthorizedException } from '@nestjs/common';
+import { Body, Controller, Get, Put, UnauthorizedException } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserDto } from './dtos/user.dto';
+import { UpdateUserDto } from './dtos/update-user.dto';
 
 @Controller('v1')
 export class UserController {
@@ -24,5 +25,15 @@ export class UserController {
         } catch(error) {
             throw new UnauthorizedException(error)
         }
+    }
+    
+    @Put('update-user')
+    updateUser(
+        @Body('updates') updates: UpdateUserDto,
+        @Body('userId') userId: number,
+    ){
+        console.log("updates: ", updates);
+        console.log("userId: ", userId);
+        return this.userService.update(userId, updates);
     }
 }

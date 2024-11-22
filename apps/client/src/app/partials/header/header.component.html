@@ -14,6 +14,18 @@
                         } @empty {
                             <li></li>
                         }
+                       @if(isLoggedIn) {
+                        <li class="item">
+                            <a href="#" (click)="logout()">Log Out</a>
+                        </li>
+                       }
+                       @else {
+                        @for (item of authMenu; track item.name) {
+                            <li class="item">
+                                <a href="#" routerLink={{item.url}}>{{item.name}}</a>
+                            </li>
+                        }
+                       }
                     </ul>
                 </nav>
             </div>

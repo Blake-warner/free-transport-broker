@@ -10,7 +10,8 @@ import { TrucksService } from '../../shared/trucks/trucks.service';
 import { Truck } from '../../shared/trucks/truck.inteface';
 import { LocalStorageService } from '../auth/local-storage.service';
 import { User } from '../auth/user/user';
-import { Material } from '../../shared/trucking-providers/models/material.model';
+import { UserService } from '../auth/user.service';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-join-network',
@@ -24,7 +25,8 @@ export class JoinNetworkComponent implements OnInit {
   constructor(
     private readonly truckProvidersService: TruckProvidersService,
     private readonly trucksService: TrucksService,
-    private readonly localStorageService: LocalStorageService 
+    private readonly localStorageService: LocalStorageService,
+    private readonly usersService: UserService,
   ) {
     console.log('form fields ', this.truckDriverForm.value);
   }
@@ -33,7 +35,7 @@ export class JoinNetworkComponent implements OnInit {
   public trucks: {id: number, type: string}[] = [];
   public truckItems: Truck[] = [];
   @ViewChild('creditCardNumber') creditCardNumber!: ElementRef;
-  public currentUser: User | undefined;
+  public currentUser!: User;
 
   ngOnInit() {
     this.truckItems = [];
@@ -101,13 +103,14 @@ export class JoinNetworkComponent implements OnInit {
     this.truckDriverForm.value.truckTypesArr?.map((truckType) => {
       console.log(truckType);
       const truckObj = this.truckArr.find((truck) => truck.id === Number(truckType.truckType)) as Truck;
-      console.log(truckObj);
-      Object.defineProperty(truckObj, 'price_per_mile', {
-        value: truckType.pricePerMile,
-        enumerable: true,
-        writable: true
-      });
-      this.truckItems.push(truckObj);
+      if(truckObj) {
+        Object.defineProperty(truckObj, 'price_per_mile', {
+          value: truckType.pricePerMile,
+          enumerable: true,
+          writable: true
+        });
+        this.truckItems.push(truckObj);
+      }
     });
     console.log(this.truckArr);
     const truckProvider = new TruckProvider(
@@ -127,7 +130,13 @@ export class JoinNetworkComponent implements OnInit {
       //this.truckDriverForm.value.materialsArr as Material[],
     );
     console.log(truckProvider);
-    this.truckProvidersService.saveProvider(truckProvider).subscribe((response) => {
+    this.truckProvidersService.saveProvider(truckProvider).pipe(
+      switchMap((response) => {
+        const profileId = response.id;
+        const userId = this.currentUser.id;
+        return this.usersService.updateUser(userId, {profileId})
+      }) 
+    ).subscribe((response) => {
       console.log(response);
     });
   }

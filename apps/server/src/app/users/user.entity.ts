@@ -20,5 +20,8 @@ export class User {
         enum: UserRoles,
         default: UserRoles.CUSTOMER
     })
-    role: UserRoles
+    role: UserRoles;
+
+    @Column()
+    profileId: number;
 }

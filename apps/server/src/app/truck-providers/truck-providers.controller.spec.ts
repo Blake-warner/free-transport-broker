@@ -8,7 +8,6 @@ describe('TruckDriversController', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [TruckProvidersController],
     }).compile();
-
     controller = module.get<TruckProvidersController>(TruckProvidersController);
   });
 
