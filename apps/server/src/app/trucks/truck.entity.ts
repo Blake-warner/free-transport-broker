@@ -1,8 +1,5 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
-import { ServiceType } from "../truck-providers/enums/service-type.enum";
-import { TruckProvider } from "../truck-providers/entities/truck-provider.entity";
-//import { TruckProvider } from "../truck-providers/entities/truck-provider.entity";
-//import { TruckProvider } from "../truck-providers/entities/truck-provider.entity";
+import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { ServiceType } from "../providers/enums/service-type.enum";
 
 @Entity()
 export class Truck {
@@ -26,6 +23,6 @@ export class Truck {
     })
     service_type: string;
 
-    @ManyToMany(() => TruckProvider, (truckProvider) => truckProvider.trucks)
-    truckProvider: TruckProvider[];
+    @Column()
+    imgUrl: string;
 }

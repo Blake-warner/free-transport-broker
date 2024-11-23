@@ -1,12 +1,14 @@
 import { DataSource } from 'typeorm';
 import { User } from '../users/user.entity';
 import { VerifyEmail } from '../auth/verify-email/verify-email.entity';
-import { TruckProvider } from '../truck-providers/entities/truck-provider.entity';
+import { Provider } from '../providers/entities/provider.entity';
 import { Truck } from '../trucks/truck.entity';
-//import { Material } from '../truck-providers/entities/material.entity';
+import { Material } from '../materials/material.entity';
+
 import databaseConfig from './config';
 import { ConfigType } from '@nestjs/config';
-import { ProviderTrucks } from '../truck-providers/entities/provider-trucks.entity';
+import { ProviderTrucks } from '../providers/entities/provider-trucks.entity';
+import { ProviderMaterials } from '../providers/entities/provider-materials.entity';
 export const databaseProviders = [
     {
         provide: 'DATA_SOURCE',  
@@ -19,15 +21,16 @@ export const databaseProviders = [
                 password: config.password,
                 database: config.name,
                 entities: [
-                    __dirname + '/../**/*.entity{.ts,.js}',
                     VerifyEmail,
-                    TruckProvider,
+                    Provider,
                     Truck,
                     ProviderTrucks,
-                    User
+                    ProviderMaterials,
+                    User,
+                    Material
                 ],
                 ssl: false,
-                synchronize: false,
+                synchronize: true,
                 logging: true,
             });
             return await dataSource.initialize();

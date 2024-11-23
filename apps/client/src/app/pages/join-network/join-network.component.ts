@@ -132,6 +132,7 @@ export class JoinNetworkComponent implements OnInit {
     console.log(truckProvider);
     this.truckProvidersService.saveProvider(truckProvider).pipe(
       switchMap((response) => {
+        console.log(response);
         const profileId = response.id;
         const userId = this.currentUser.id;
         return this.usersService.updateUser(userId, {profileId})

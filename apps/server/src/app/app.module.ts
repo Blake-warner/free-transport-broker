@@ -8,8 +8,9 @@ import { UserModule } from './users/user.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { MailModule } from './auth/mailer/mailer.module';
-import { TruckProvidersModule } from './truck-providers/truck-providers.module';
+import { TruckProvidersModule } from './providers/truck-providers.module';
 import { TrucksModule } from './trucks/trucks.module';
+import { MaterialsModule } from './materials/materials.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { TrucksModule } from './trucks/trucks.module';
     MailModule,
     TruckProvidersModule,
     TrucksModule,
+    MaterialsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
