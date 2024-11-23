@@ -10,5 +10,5 @@ export class Material {
     name: string;
 
     @Column()
-    price_per_unit: number;
+    imgUrl: number;
 }

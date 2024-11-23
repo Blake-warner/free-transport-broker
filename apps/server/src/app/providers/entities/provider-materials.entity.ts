@@ -1,6 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Provider } from "./provider.entity";
-import { ServiceType } from "../enums/service-type.enum";
 
 @Entity()
 export class ProviderMaterials {
@@ -12,23 +11,10 @@ export class ProviderMaterials {
     provider: Provider;
 
     @Column()
-    type: string;
-
-    @Column({
-        type: "enum",
-        enum: ServiceType,
-        default: ServiceType.Material_and_Demo
-    })
-    serviceType: string;
+    name: string;
 
     @Column()
-    pricePerMile: number;
-
-    @Column()
-    minCapacity: number;
-
-    @Column()
-    maxCapacity: number;
+    pricePerUnit: number;
 
     @Column()
     imgUrl: string;
