@@ -3,15 +3,15 @@ import { CommonModule } from '@angular/common';
 import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TruckProvidersService } from '../../shared/trucking-providers/truck-providers.service';
 import { TruckProvider } from '../../shared/trucking-providers/models/truck-provider.model';
-//import { TruckType } from '../../shared/trucks/truck-type.model';
-//import { Material } from '../../shared/trucking-providers/models/material.model';
-import * as CONSTANTS from '../../shared/trucking-providers/truck-provider.constants';
+//import * as CONSTANTS from '../../shared/trucking-providers/truck-provider.constants';
 import { TrucksService } from '../../shared/trucks/trucks.service';
 import { Truck } from '../../shared/trucks/truck.inteface';
 import { LocalStorageService } from '../auth/local-storage.service';
 import { User } from '../auth/user/user';
 import { UserService } from '../auth/user.service';
 import { switchMap } from 'rxjs';
+import { MaterialsService } from '../../shared/materials/materials.service';
+import { Material } from '../../shared/materials/materials.interface';
 
 @Component({
   selector: 'app-join-network',
@@ -27,11 +27,13 @@ export class JoinNetworkComponent implements OnInit {
     private readonly trucksService: TrucksService,
     private readonly localStorageService: LocalStorageService,
     private readonly usersService: UserService,
+    private readonly materialsService: MaterialsService,
   ) {
     console.log('form fields ', this.truckDriverForm.value);
   }
 
   public truckArr: Truck[] = [];
+  public materialArr: Material[] = [];
   public trucks: {id: number, type: string}[] = [];
   public truckItems: Truck[] = [];
   @ViewChild('creditCardNumber') creditCardNumber!: ElementRef;
@@ -39,7 +41,6 @@ export class JoinNetworkComponent implements OnInit {
 
   ngOnInit() {
     this.truckItems = [];
-      console.log(CONSTANTS.FETCH_TRUCKS);
       this.trucksService.getTrucks().subscribe((response: Truck[]) => {
         this.truckArr = response;
         this.trucks = response.map((truck) => {
@@ -49,7 +50,10 @@ export class JoinNetworkComponent implements OnInit {
           }
         });
       });
-      this.currentUser = JSON.parse(this.localStorageService.getItem('user') as string);
+    this.materialsService.getMaterials().subscribe((response: Material[]) => {
+      this.materialArr = response;
+    })
+    this.currentUser = JSON.parse(this.localStorageService.getItem('user') as string);
   }
 
   truckTypesGrp = new FormGroup({

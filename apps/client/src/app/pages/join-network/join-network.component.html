@@ -12,7 +12,7 @@
 <section class="page-content join-network">
     <div class="container">
         <p>
-            Please complete all the fields below to optimize your profile and get the best results! For example, when adding vehicles make sure to upload your own personal Truck/Trailor Pictures for customer recognition. Also make sure to add any extra services you can provide, thus maximizing your exposure and putting more money in your pocket. Even smaller equippment suych as a compactor can help secure leads.     
+            Please complete all the fields below to optimize your profile and get the best results! For example, when adding vehicles make sure to upload your own personal Truck/Trailor Pictures for customer recognition. Also make sure to add any extra services you can provide, thus maximizing your exposure and putting more money in your pocket. Even smaller equippment such as a compactor can help secure leads.     
         </p>
         <form [formGroup]="truckDriverForm" autocomplete="off">
             <div class="company form-section">
@@ -64,7 +64,7 @@
                                             @if(i < 1) {
                                                 <option value="" disabled selected>Select Truck...</option>
                                             }@else {
-                                                <option value={{truck.id}}>{{truck.type}}</option>
+                                                <option value={{truck.type}}>{{truck.type}}</option>
                                             }
                                         } @empty {
                                         }

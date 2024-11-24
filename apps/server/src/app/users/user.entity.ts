@@ -22,6 +22,8 @@ export class User {
     })
     role: UserRoles;
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     profileId: number;
 }
