@@ -10,5 +10,5 @@ export class Material {
     name: string;
 
     @Column()
-    imgUrl: number;
+    imgUrl: string;
 }
