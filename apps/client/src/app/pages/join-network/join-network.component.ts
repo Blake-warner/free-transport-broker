@@ -52,7 +52,7 @@ export class JoinNetworkComponent implements OnInit {
       });
     this.materialsService.getMaterials().subscribe((response: Material[]) => {
       this.materialArr = response;
-    })
+    });
     this.currentUser = JSON.parse(this.localStorageService.getItem('user') as string);
   }
 

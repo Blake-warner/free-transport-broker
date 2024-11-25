@@ -56,50 +56,71 @@
                 <div formArrayName="truckTypesArr">
                     <div>
                     @for(item of getTruckItems().controls; track item; let i = $index) {
-                        <div [formGroupName]="i" class="flex-container">
+                        <div class="flex-container truck-container">
                             <div class="flex-item col-2">
-                                <input *ngIf="trucks.length" class="form-control" formControlName="truckType" id="floatingInput" placeholder="Select Truck..." required type="text" name="trucks" list="trucks">
-                                <datalist id="trucks">
-                                        @for (truck of trucks; track truck; let i = $index) {
-                                            @if(i < 1) {
-                                                <option value="" disabled selected>Select Truck...</option>
-                                            }@else {
-                                                <option value={{truck.type}}>{{truck.type}}</option>
+                                <div [formGroupName]="i" class="flex-container">
+                                    <div class="field-wrapper">
+                                        <input *ngIf="trucks.length" class="form-control" formControlName="truckType" id="floatingInput" placeholder="Select Truck..." required type="text" name="trucks" list="trucks">
+                                        <datalist id="trucks">
+                                                @for (truck of trucks; track truck; let i = $index) {
+                                                    @if(i < 1) {
+                                                        <option value="" disabled selected>Select Truck...</option>
+                                                    }@else {
+                                                        <option value={{truck.type}}>{{truck.type}}</option>
+                                                    }
+                                                } @empty {
+                                                }
+                                        </datalist>
+                                    </div>
+                                    <div class="field-wrapper">
+                                        <input type="number" class="form-control" id="floatingInput" formControlName="pricePerMile" name="pricePerMile" placeholder="Price Per Mile" required>
+                                    </div>
+                                </div>
+                                <!--<div class="flex-item col-2">
+                                    <input type="number" class="form-control" id="floatingInput" formControlName="pricePerMile" placeholder="Price Per Mile" required>
+                                </div>
+                                    <div class="flex-item col-3 middle">
+                                        <select *ngIf="loadCapacity.length" class="form-control" formControlName="loadCapacity" id="floatingInput">
+                                            @for (load of loadCapacity; track load; let i = $index) {
+                                                @if(i < 1) {
+                                                    <option value="" disabled selected>Select Load Capacity...</option>
+                                                }
+                                                <option value={{load}}>{{load}}</option>
+                                            } @empty {
                                             }
-                                        } @empty {
-                                        }
-                                </datalist>
+                                        </select>
+                                    </div>
+                                    <div class="flex-item col-3">
+                                        <select *ngIf="serviceTypes.length" class="form-control" formControlName="serviceType" id="floatingInput">
+                                            @for (type of serviceTypes; track type; let i = $index) {
+                                                @if( i < 1) {
+                                                    <option value="" disabled selected>Select Service...</option>
+                                                }@else {
+                                                    <option value={{type}}>{{type}}</option>
+                                                }
+                                            } @empty {
+                                            }
+                                        </select>
+                                    </div>-->
+                                    
                             </div>
                             <div class="flex-item col-2">
-                                <input type="number" class="form-control" id="floatingInput" formControlName="pricePerMile" name="pricePerMile" placeholder="Price Per Mile" required>
+                                <div class="flex-container">
+                                    <div class="flex-item col-3">
+                                        <h3>Type: <span>...</span></h3>
+                                        <h3>Capacity: <span>...</span></h3>
+                                        <h3>Service Type: <span>...</span></h3>
+                                    </div>
+                                    <div class="flex-item col-3">
+                                        <h3>Change Images <span>...</span></h3>
+                                        <input type="file">
+                                    </div>
+                                    <div class="flex-item col-3">
+                                        <img src="assets/images/providers/img-placeholder.svg" alt="placeholder" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <!--<div class="flex-item col-2">
-                            <input type="number" class="form-control" id="floatingInput" formControlName="pricePerMile" placeholder="Price Per Mile" required>
-                        </div>
-                            <div class="flex-item col-3 middle">
-                                <select *ngIf="loadCapacity.length" class="form-control" formControlName="loadCapacity" id="floatingInput">
-                                    @for (load of loadCapacity; track load; let i = $index) {
-                                        @if(i < 1) {
-                                            <option value="" disabled selected>Select Load Capacity...</option>
-                                        }
-                                        <option value={{load}}>{{load}}</option>
-                                    } @empty {
-                                    }
-                                </select>
-                            </div>
-                            <div class="flex-item col-3">
-                                <select *ngIf="serviceTypes.length" class="form-control" formControlName="serviceType" id="floatingInput">
-                                    @for (type of serviceTypes; track type; let i = $index) {
-                                        @if( i < 1) {
-                                            <option value="" disabled selected>Select Service...</option>
-                                        }@else {
-                                            <option value={{type}}>{{type}}</option>
-                                        }
-                                    } @empty {
-                                    }
-                                </select>
-                            </div>-->
                     }
                     </div>
                 </div>
