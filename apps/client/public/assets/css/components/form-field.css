@@ -30,6 +30,10 @@ input[type=date] {
   color: #777;
 }
 
+input {
+  color: #777;
+}
+
 .field-wrapper {
   width: 100%;
 }

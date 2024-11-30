@@ -1,7 +1,7 @@
 <section class="hero">
     <div class="flex-container container">
         <div class="flex-item">
-            <h2>Join Our Network</h2>
+            <h1>Join Our Network</h1>
             <p>Show your profile to new potential customers</p>
         </div>
         <div class="flex-item bg-img">
@@ -16,7 +16,7 @@
         </p>
         <form [formGroup]="truckDriverForm" autocomplete="off">
             <div class="company form-section">
-                <h3>Company</h3>
+                <h2>Company</h2>
                 <div class="flex-container">
                     <div class="flex-item col-3">
                         <input type="text" class="form-control" id="floatingInput" formControlName="company" placeholder="Company" required>
@@ -52,7 +52,7 @@
                 </div>
             </div>
             <div class="trucks form-section">
-                <h3>Trucks</h3>
+                <h2>Trucks</h2>
                 <div formArrayName="truckTypesArr">
                     <div>
                     @for(item of getTruckItems().controls; track item; let i = $index) {
@@ -60,49 +60,35 @@
                             <div class="flex-item col-2">
                                 <div [formGroupName]="i" class="flex-container">
                                     <div class="field-wrapper">
-                                        <input *ngIf="trucks.length" class="form-control" formControlName="truckType" id="floatingInput" placeholder="Select Truck..." required type="text" name="trucks" list="trucks">
+                                        <input 
+                                            *ngIf="trucks.length" 
+                                            class="form-control" 
+                                            formControlName="truckType" 
+                                            id="floatingInput" 
+                                            placeholder="Select Truck..." 
+                                            required 
+                                            type="text" 
+                                            name="trucks" 
+                                            list="trucks"
+                                            [(ngModel)]="selectedTruckModel" 
+                                            (ngModelChange)="onTruckModelSelect($event, i)"
+                                            (click)="selectAllText($event)"
+                                        >
                                         <datalist id="trucks">
-                                                @for (truck of trucks; track truck; let i = $index) {
-                                                    @if(i < 1) {
-                                                        <option value="" disabled selected>Select Truck...</option>
-                                                    }@else {
-                                                        <option value={{truck.type}}>{{truck.type}}</option>
-                                                    }
-                                                } @empty {
+                                            @for (truck of trucks; track truck; let i = $index) {
+                                                @if(i < 1) {
+                                                    <option value="" disabled selected>Select Truck...</option>
+                                                }@else {
+                                                    <option value={{truck.type}}>{{truck.type}}</option>
                                                 }
+                                            } @empty {
+                                            }
                                         </datalist>
                                     </div>
                                     <div class="field-wrapper">
                                         <input type="number" class="form-control" id="floatingInput" formControlName="pricePerMile" name="pricePerMile" placeholder="Price Per Mile" required>
                                     </div>
-                                </div>
-                                <!--<div class="flex-item col-2">
-                                    <input type="number" class="form-control" id="floatingInput" formControlName="pricePerMile" placeholder="Price Per Mile" required>
-                                </div>
-                                    <div class="flex-item col-3 middle">
-                                        <select *ngIf="loadCapacity.length" class="form-control" formControlName="loadCapacity" id="floatingInput">
-                                            @for (load of loadCapacity; track load; let i = $index) {
-                                                @if(i < 1) {
-                                                    <option value="" disabled selected>Select Load Capacity...</option>
-                                                }
-                                                <option value={{load}}>{{load}}</option>
-                                            } @empty {
-                                            }
-                                        </select>
-                                    </div>
-                                    <div class="flex-item col-3">
-                                        <select *ngIf="serviceTypes.length" class="form-control" formControlName="serviceType" id="floatingInput">
-                                            @for (type of serviceTypes; track type; let i = $index) {
-                                                @if( i < 1) {
-                                                    <option value="" disabled selected>Select Service...</option>
-                                                }@else {
-                                                    <option value={{type}}>{{type}}</option>
-                                                }
-                                            } @empty {
-                                            }
-                                        </select>
-                                    </div>-->
-                                    
+                                </div>   
                             </div>
                             <div class="flex-item col-2">
                                 <div class="flex-container">
@@ -169,7 +155,7 @@
                 </button>
             </div>-->
             <div class="payment-info form-section">
-                <h3>Payment Info</h3>
+                <h2>Payment Info</h2>
                 <div class="flex-container">
                     <div class="flex-item col-3">
                         <input type="text" class="form-control" id="floatingInput" formControlName="cardholderName" name="cardholderName" placeholder="Enter Name On Card..." required>

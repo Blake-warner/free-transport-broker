@@ -38,11 +38,14 @@ export class JoinNetworkComponent implements OnInit {
   public truckItems: Truck[] = [];
   @ViewChild('creditCardNumber') creditCardNumber!: ElementRef;
   public currentUser!: User;
+  public truckSelected = false;
+  public selectedTruckModel: any;
 
   ngOnInit() {
     this.truckItems = [];
       this.trucksService.getTrucks().subscribe((response: Truck[]) => {
         this.truckArr = response;
+        console.log(this.truckArr);
         this.trucks = response.map((truck) => {
           return {
             id: truck.id,
@@ -91,13 +94,16 @@ export class JoinNetworkComponent implements OnInit {
     return new FormGroup({
       truckType: new FormControl(''),
       pricePerMile: new FormControl(''),
+      min_capacity: new FormControl(''),
+      max_capacity: new FormControl(''),
+      service_type: new FormControl(''),
+      img: new FormControl('')
     });
   }
 
   createMaterialItem(): FormGroup {
     return new FormGroup({
       name: new FormControl(''),
-      //unitForWeight: new FormControl(''),
       pricePerUnit: new FormControl(''),
     });
   }
@@ -117,7 +123,7 @@ export class JoinNetworkComponent implements OnInit {
       }
     });
     console.log(this.truckArr);
-    const truckProvider = new TruckProvider(
+    const truckProvider = new TruckProvider (
       this.truckDriverForm.value.company as string,
       this.truckDriverForm.value.license as string,
       this.truckDriverForm.value.phone as string,
@@ -144,6 +150,23 @@ export class JoinNetworkComponent implements OnInit {
     ).subscribe((response) => {
       console.log(response);
     });
+  }
+
+  onTruckModelSelect(truckModel: any, index: number) {
+    console.log(index);
+    console.log(event);
+    this.truckSelected = !this.truckSelected;
+    if(this.truckSelected) {
+      console.log('truck selected');
+    }
+    this.selectedTruckModel = this.truckArr.find(truck => truck.type === truckModel);
+    const selectedTruckModel = this.truckDriverForm.controls.truckTypesArr;
+    console.log(this.selectedTruckModel);
+    console.log(selectedTruckModel);
+  }
+
+  selectAllText(event: any) {
+    event.target.select();
   }
 
   getTruckItems(): FormArray {
@@ -173,7 +196,6 @@ export class JoinNetworkComponent implements OnInit {
   public states = ['Alabama','Alaska','American Samoa','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Federated States of Micronesia','Florida','Georgia','Guam','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Marshall Islands','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Northern Mariana Islands','Ohio','Oklahoma','Oregon','Palau','Pennsylvania','Puerto Rico','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virgin Island','Virginia','Washington','West Virginia','Wisconsin','Wyoming']
   public loadCapacity = ['1 Ton', '5 Tons', '10 Tons', '15 Tons', '20 Tons', '25 Tons'];
   public serviceTypes = ['Material', 'Demo', 'Material/Demo'];
-
   public materials = ['Aggregate', 'Concrete', 'Sand', 'Dirt', 'Rock'];
   public unitForWeight = ['Pounds', 'Kilo tons'];
 

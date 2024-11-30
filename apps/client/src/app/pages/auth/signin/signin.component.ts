@@ -4,6 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { catchError, of } from 'rxjs';
+import { GoogleOauthComponent } from '../google/google-oauth.component';
 
 @Component({
   selector: 'app-signin',
@@ -11,13 +12,16 @@ import { catchError, of } from 'rxjs';
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    GoogleOauthComponent,
   ],
   templateUrl: './signin.component.html',
   styleUrl: './signin.component.css',
 })
 export class SigninComponent {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+  ) {}
 
   onSubmit(form: NgForm) {
     const payload = {
