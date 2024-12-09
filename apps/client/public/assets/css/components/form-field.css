@@ -30,5 +30,13 @@ input[type=date] {
   color: #777;
 }
 
+input {
+  color: #777;
+}
+
+.field-wrapper {
+  width: 100%;
+}
+
 /*::-webkit-inner-spin-button { display: none; }
 ::-webkit-calendar-picker-indicator { background: orange; }*/

@@ -11,6 +11,9 @@ import { BcryptService } from './hashing/bcrypt.service';
 import { AuthController } from './auth.controller';
 import { HashingService } from './hashing/hashing.service';
 import { MailService } from './mailer/mailer.service';
+import { GoogleAuthenticationService } from './social/google-authentication.service';
+import { GoogleAuthenticationController } from './social/google-authentication.controller';
+import socialConfig from './social/config';
 
 @Module({
   imports: [
@@ -18,6 +21,7 @@ import { MailService } from './mailer/mailer.service';
     SharedModule,
     UserModule,
     ConfigModule.forFeature(jwtConfig),
+    ConfigModule.forFeature(socialConfig),
   ],
   providers: [
     VerifyEmailService,
@@ -28,8 +32,13 @@ import { MailService } from './mailer/mailer.service';
       provide: HashingService,
       useClass: BcryptService,
     },
-    MailService
+    MailService,
+    GoogleAuthenticationService
   ],
-  controllers: [AuthController],
+  controllers: [
+    AuthController,
+    GoogleAuthenticationController
+  ],
 })
 export class AuthModule {}
+

@@ -6,13 +6,16 @@ export class User {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({ unique: true })
     email: string;
 
-    @Column()
+    @Column({ nullable: true })
     password: string;
 
-    @Column()
+    @Column({ nullable: true })
+    googleId: string;
+
+    @Column({ nullable: true })
     full_name: string;
 
     @Column({
@@ -22,6 +25,8 @@ export class User {
     })
     role: UserRoles;
 
-    @Column()
+    @Column({
+        nullable: true
+    })
     profileId: number;
 }

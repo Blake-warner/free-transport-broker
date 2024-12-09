@@ -8,7 +8,6 @@ import { Repository } from 'typeorm';
 export class UserService extends RepositoryService {
     constructor(
         @Inject("USER_REPOSITORY") private userRepository: Repository<User>
-        //@InjectRepository(User) private userRepository: Repository<User>
     ){
         super(userRepository);
     }

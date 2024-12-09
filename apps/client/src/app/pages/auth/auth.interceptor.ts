@@ -8,7 +8,7 @@ export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) 
   // Inject the current `AuthService` and use it to get an authentication token:
   const authService = inject(AuthService);
   //const accessToken = authService.getAccessToken();
-
+  //console.log('accessToken: ', accessToken);
   /*if (accessToken) {
     req = req.clone({
       setHeaders: {

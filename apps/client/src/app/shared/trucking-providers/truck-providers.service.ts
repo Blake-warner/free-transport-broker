@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class TruckProvidersService{
+export class TruckProvidersService {
 
   constructor(private httpClient: HttpClient) { }
   saveProvider(provider: TruckProvider): Observable<any> {
