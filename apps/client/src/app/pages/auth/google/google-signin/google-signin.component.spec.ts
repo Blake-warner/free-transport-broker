@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { GoogleOauthComponent } from './google-oauth.component';
+import { GoogleSigninComponent } from './google-signin.component';
 
-describe('GoogleOauthComponent', () => {
-  let component: GoogleOauthComponent;
-  let fixture: ComponentFixture<GoogleOauthComponent>;
+describe('GoogleSigninComponent', () => {
+  let component: GoogleSigninComponent;
+  let fixture: ComponentFixture<GoogleSigninComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GoogleOauthComponent],
+      imports: [GoogleSigninComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(GoogleOauthComponent);
+    fixture = TestBed.createComponent(GoogleSigninComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

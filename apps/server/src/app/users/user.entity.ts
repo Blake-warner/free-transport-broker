@@ -6,7 +6,7 @@ export class User {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column()
+    @Column({ unique: true })
     email: string;
 
     @Column({ nullable: true })
@@ -15,7 +15,7 @@ export class User {
     @Column({ nullable: true })
     googleId: string;
 
-    @Column()
+    @Column({ nullable: true })
     full_name: string;
 
     @Column({

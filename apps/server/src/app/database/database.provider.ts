@@ -9,6 +9,7 @@ import databaseConfig from './config';
 import { ConfigType } from '@nestjs/config';
 import { ProviderTrucks } from '../providers/entities/provider-trucks.entity';
 import { ProviderMaterials } from '../providers/entities/provider-materials.entity';
+
 export const databaseProviders = [
     {
         provide: 'DATA_SOURCE',  

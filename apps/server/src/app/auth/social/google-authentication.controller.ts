@@ -3,16 +3,18 @@ import { GoogleAuthenticationService } from './google-authentication.service';
 import { GoogleTokenDto } from '../dto/google-token.dto';
 import { AuthType } from '../enums/auth-type.enum';
 import { Auth } from '../decorators/auth.decorator';
+import * as CONSTANTS from '../../shared/constants';
 
 @Auth(AuthType.None)
-@Controller('authentication/google')
+@Controller(CONSTANTS.versions)
 export class GoogleAuthenticationController {
     constructor(
         private readonly googleAuthenticationService: GoogleAuthenticationService
     ){}
 
-    @Post()
+    @Post('authentication/google')
     authenticate(@Body() tokenDto: GoogleTokenDto) {
-        return this.googleAuthenticationService.authenticate(tokenDto.token);
+        console.log('tokenDto token: ', tokenDto.token);
+        return this.googleAuthenticationService.authenticate(tokenDto.token, tokenDto.fullName);
     }
 }

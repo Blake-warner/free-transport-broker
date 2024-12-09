@@ -7,13 +7,7 @@ import { LocalStorageService } from './local-storage.service';
 import { TempUserData } from './user/interfaces/tempUserData.interface';
 import moment from "moment";
 import * as jwt_decode from 'jwt-decode';
-
-interface authUserPayload {
-  user: User;
-  accessToken: string | null;
-  refreshToken: string | null;
-  expiresIn: number;
-}
+import { AuthUserPayload } from './user/interfaces/auth-user-payload.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +31,7 @@ export class AuthService {
   }
 
   signin(data: {email: string, password: string}) {
-    return this.http.post<authUserPayload>(CONSTANTS.SIGNIN_ENDPOINT, data);
+    return this.http.post<AuthUserPayload>(CONSTANTS.SIGNIN_ENDPOINT, data);
   }
 
   verifyEmail(email: string) {
@@ -61,7 +55,7 @@ export class AuthService {
   refreshToken() {
     const tokens = this.localStorageService.getItem('authTokens') as string;
     const refreshToken = JSON.parse(tokens).refreshToken;
-    return this.http.post<authUserPayload>(CONSTANTS.REFRESH_TOKENS_ENDPOINT, refreshToken);
+    return this.http.post<AuthUserPayload>(CONSTANTS.REFRESH_TOKENS_ENDPOINT, refreshToken);
   }
 
   public isLoggedIn() {
@@ -93,7 +87,7 @@ export class AuthService {
     }
   }
 
-  handleAuthentication(payload: authUserPayload) {
+  handleAuthentication(payload: AuthUserPayload) {
     const authTokens = {
       accessToken: payload.accessToken,
       refreshToken: payload.refreshToken,

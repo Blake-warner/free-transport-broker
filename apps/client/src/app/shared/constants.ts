@@ -15,6 +15,10 @@ export const SIGNIN_ENDPOINT = API + AUTH_SIGNIN;
 export const VALIDATED_USER_ENDPOINT = API + VALIDATED_USER;
 export const REFRESH_TOKENS_ENDPOINT = API + REFRESH_TOKENS;
 
+// Google Auth
+export const GOOGLE_AUTH = '/authentication/google';
+export const GOOGLE_AUTH_ENDPOINT = API + GOOGLE_AUTH;
+
 // User
 export const UPDATE_USER = '/update-user';
 export const UPDATE_USER_ENDPOINT = API + UPDATE_USER;
