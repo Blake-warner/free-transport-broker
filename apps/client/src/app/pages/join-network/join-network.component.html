@@ -63,15 +63,16 @@
                                         <input 
                                             *ngIf="trucks.length" 
                                             class="form-control" 
-                                            formControlName="truckType" 
+                                            formControlName="type" 
                                             id="floatingInput" 
                                             placeholder="Select Truck..." 
                                             required 
                                             type="text" 
                                             name="trucks" 
                                             list="trucks"
-                                            [(ngModel)]="selectedTruckModel" 
-                                            (ngModelChange)="onTruckModelSelect($event, i)"
+                                            #truckModel
+                                            (ngModelChange)="setTruckModelProps($event, i)"
+                                            (blur)="onTruckModelSelect(truckModel.value, i)"
                                             (click)="selectAllText($event)"
                                         >
                                         <datalist id="trucks">
@@ -86,23 +87,39 @@
                                         </datalist>
                                     </div>
                                     <div class="field-wrapper">
-                                        <input type="number" class="form-control" id="floatingInput" formControlName="pricePerMile" name="pricePerMile" placeholder="Price Per Mile" required>
+                                        <input 
+                                            type="number" 
+                                            class="form-control" 
+                                            id="floatingInput" 
+                                            formControlName="pricePerMile" 
+                                            name="pricePerMile" 
+                                            placeholder="Price Per Mile" 
+                                            required
+                                            #pricePerMile
+                                            (blur)="onPricePerMileSelect(pricePerMile.value, i)"
+                                        >
                                     </div>
                                 </div>   
                             </div>
                             <div class="flex-item col-2">
-                                <div class="flex-container">
+                                <div class="flex-container truck-properties">
                                     <div class="flex-item col-3">
-                                        <h3>Type: <span>...</span></h3>
-                                        <h3>Capacity: <span>...</span></h3>
-                                        <h3>Service Type: <span>...</span></h3>
+                                        <h3>Type: <span *ngIf="setTruckModelPropsArr[i]?.type; else noType">{{setTruckModelPropsArr[i].type}}</span><ng-template class="no-prop-value" #noType><span>...</span></ng-template></h3>
+                                        <h3>Min Capacity: <span class="set-prop" *ngIf="setTruckModelPropsArr[i]?.minCapacity; else noMinCap">{{setTruckModelPropsArr[i].minCapacity}}</span><ng-template class="no-prop-value" #noMinCap><span>...</span></ng-template></h3>
+                                        <h3>Max Capacity: <span class="set-prop" *ngIf="setTruckModelPropsArr[i]?.maxCapacity; else noMaxCap">{{setTruckModelPropsArr[i].maxCapacity}}</span><ng-template class="no-prop-value" #noMaxCap><span>...</span></ng-template></h3>
+                                        <h3>Service Type: <span class="set-prop" *ngIf="setTruckModelPropsArr[i]?.serviceType; else noServiceType">{{setTruckModelPropsArr[i].serviceType}}</span><ng-template class="no-prop-value" #noServiceType><span>...</span></ng-template></h3>
                                     </div>
                                     <div class="flex-item col-3">
-                                        <h3>Change Images <span>...</span></h3>
-                                        <input type="file">
+                                        <button class="img-upload" (click)="fileInput.click()">Upload Image</button>
+                                        <input #fileInput type="file" accept="image/*" (change)="onImageSelected($event, i)" hidden>
                                     </div>
                                     <div class="flex-item col-3">
-                                        <img src="assets/images/providers/img-placeholder.svg" alt="placeholder" />
+                                        <span *ngIf="setTruckModelPropsArr[i].imgUrl; else noImg">
+                                            <img [src]="setTruckModelPropsArr[i].imgUrl" alt="placeholder" />
+                                        </span>
+                                        <ng-template #noImg>
+                                            <img src="assets/images/providers/img-placeholder.svg" alt="placeholder" />
+                                        </ng-template>
                                     </div>
                                 </div>
                             </div>

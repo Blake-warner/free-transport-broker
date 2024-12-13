@@ -1,9 +1,6 @@
 FROM node:latest
 
 WORKDIR /app
-
-
-WORKDIR /app
 COPY ./dist/apps/client .
 ARG PORT=4200
 ENV PORT=$PORT

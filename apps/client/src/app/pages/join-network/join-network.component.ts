@@ -12,6 +12,7 @@ import { UserService } from '../auth/user.service';
 import { switchMap } from 'rxjs';
 import { MaterialsService } from '../../shared/materials/materials.service';
 import { Material } from '../../shared/materials/materials.interface';
+import { TruckModelProps } from '../../shared/trucks/truck-model-props.interface';
 
 @Component({
   selector: 'app-join-network',
@@ -21,6 +22,7 @@ import { Material } from '../../shared/materials/materials.interface';
   styleUrl: './join-network.component.css',
 })
 export class JoinNetworkComponent implements OnInit {
+  public imgSrc!: string;
 
   constructor(
     private readonly truckProvidersService: TruckProvidersService,
@@ -38,8 +40,10 @@ export class JoinNetworkComponent implements OnInit {
   public truckItems: Truck[] = [];
   @ViewChild('creditCardNumber') creditCardNumber!: ElementRef;
   public currentUser!: User;
-  public truckSelected = false;
-  public selectedTruckModel: any;
+  public addedPricePerMile: number | null = null;
+  public selectedTruckModel: Truck | null = null;
+  public setTruckModelPropsArr: TruckModelProps[] = [];
+  
 
   ngOnInit() {
     this.truckItems = [];
@@ -57,6 +61,7 @@ export class JoinNetworkComponent implements OnInit {
       this.materialArr = response;
     });
     this.currentUser = JSON.parse(this.localStorageService.getItem('user') as string);
+    console.log(this.setTruckModelPropsArr);
   }
 
   truckTypesGrp = new FormGroup({
@@ -90,17 +95,22 @@ export class JoinNetworkComponent implements OnInit {
     comments: new FormControl('')
   });
 
+  // create new form group for each truck added to the form
   createTruckItem(): FormGroup {
+    // initiate an empty initial object for the truck model properties so the user can set properties as they please
+    this.setTruckModelPropsArr.push(new TruckModelProps());
+    // new Form group for the truck values
     return new FormGroup({
-      truckType: new FormControl(''),
+      type: new FormControl(''),
       pricePerMile: new FormControl(''),
-      min_capacity: new FormControl(''),
-      max_capacity: new FormControl(''),
-      service_type: new FormControl(''),
-      img: new FormControl('')
+      minCapacity: new FormControl(''),
+      maxCapacity: new FormControl(''),
+      serviceType: new FormControl(''),
+      image: new FormControl('')
     });
   }
 
+  // create new form group for each material added to the form
   createMaterialItem(): FormGroup {
     return new FormGroup({
       name: new FormControl(''),
@@ -112,13 +122,8 @@ export class JoinNetworkComponent implements OnInit {
     console.log('submitted form value: ', this.truckDriverForm.value);
     this.truckDriverForm.value.truckTypesArr?.map((truckType) => {
       console.log(truckType);
-      const truckObj = this.truckArr.find((truck) => truck.id === Number(truckType.truckType)) as Truck;
+      const truckObj = this.truckArr.find((truck) => truck.id === Number(truckType.type)) as Truck;
       if(truckObj) {
-        Object.defineProperty(truckObj, 'price_per_mile', {
-          value: truckType.pricePerMile,
-          enumerable: true,
-          writable: true
-        });
         this.truckItems.push(truckObj);
       }
     });
@@ -153,16 +158,62 @@ export class JoinNetworkComponent implements OnInit {
   }
 
   onTruckModelSelect(truckModel: any, index: number) {
-    console.log(index);
-    console.log(event);
-    this.truckSelected = !this.truckSelected;
-    if(this.truckSelected) {
-      console.log('truck selected');
-    }
-    this.selectedTruckModel = this.truckArr.find(truck => truck.type === truckModel);
-    const selectedTruckModel = this.truckDriverForm.controls.truckTypesArr;
+    this.selectedTruckModel = this.truckArr.find(truck => truck.type === truckModel) as Truck;
+    const selectedTruckModelsArr = this.truckDriverForm.controls.truckTypesArr;
     console.log(this.selectedTruckModel);
-    console.log(selectedTruckModel);
+    console.log(selectedTruckModelsArr);
+    if(this.selectedTruckModel) {
+      const controls = this.getTruckItems();
+      const controlValues = {
+        imgUrl: this.selectedTruckModel.imgUrl,
+        maxCapacity: this.selectedTruckModel.maxCapacity,
+        minCapacity: this.selectedTruckModel.minCapacity,
+        serviceType: this.selectedTruckModel.serviceType,
+        type: this.selectedTruckModel.type
+      }
+      console.log(controlValues);
+      controls.at(index).patchValue(controlValues);
+      console.log(selectedTruckModelsArr);
+    }
+  }
+
+  setTruckModelProps(truckModel: any, index: number) {
+    console.log(truckModel);
+    const selectedTruckModel = this.truckArr.find(truck => truck.type === truckModel) as Truck;
+    const props = {
+      type: selectedTruckModel.type,
+      minCapacity: selectedTruckModel.minCapacity,
+      maxCapacity: selectedTruckModel.maxCapacity,
+      serviceType: selectedTruckModel.serviceType,
+      imgUrl: selectedTruckModel.imgUrl,
+    }
+    console.log(props);
+    this.setTruckModelPropsArr[index] = props;
+    console.log(this.setTruckModelPropsArr[index]);
+  }
+
+  onPricePerMileSelect(price: any, index: number) {
+      const control = (this.truckDriverForm.get('truckTypesArr') as FormArray).at(index);
+      control.get('pricePerMile')?.setValue(price);
+      console.log(control);
+  }
+
+  onImageSelected(event: any, index: number) {
+    const file = event.target.files[0];
+    console.log(file);
+    if(file) {
+      // display preview of selected image
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imgSrc = reader.result as string;
+        this.setTruckModelPropsArr[index].imgUrl = this.imgSrc;
+      };
+      reader.readAsDataURL(file);
+      // set formArray's formgroup's image control at current index
+      const control = (this.truckDriverForm.get('truckTypesArr') as FormArray).at(index);
+      control.get('image')?.setValue(file);
+      console.log(this.truckDriverForm.controls.truckTypesArr);
+    }
   }
 
   selectAllText(event: any) {

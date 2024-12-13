@@ -9,7 +9,7 @@ import databaseConfig from './config'
   ],
   providers: [
    ...databaseProviders,
-],
+  ],
   exports: [
     ...databaseProviders
   ],

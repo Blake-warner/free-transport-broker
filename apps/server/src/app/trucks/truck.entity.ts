@@ -11,17 +11,17 @@ export class Truck {
     type: string;
 
     @Column()
-    min_capacity: number;
+    minCapacity: number;
 
     @Column()
-    max_capacity: number;
+    maxCapacity: number;
 
     @Column({
         type: "enum",
         enum: ServiceType,
         default: ServiceType.Material_and_Demo
     })
-    service_type: string;
+    serviceType: string;
 
     @Column()
     imgUrl: string;
