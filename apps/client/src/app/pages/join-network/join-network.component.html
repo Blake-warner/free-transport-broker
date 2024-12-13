@@ -104,10 +104,10 @@
                             <div class="flex-item col-2">
                                 <div class="flex-container truck-properties">
                                     <div class="flex-item col-3">
-                                        <h3>Type: <span *ngIf="setTruckModelPropsArr[i]?.type; else noType">{{setTruckModelPropsArr[i].type}}</span><ng-template class="no-prop-value" #noType><span>...</span></ng-template></h3>
-                                        <h3>Min Capacity: <span class="set-prop" *ngIf="setTruckModelPropsArr[i]?.minCapacity; else noMinCap">{{setTruckModelPropsArr[i].minCapacity}}</span><ng-template class="no-prop-value" #noMinCap><span>...</span></ng-template></h3>
-                                        <h3>Max Capacity: <span class="set-prop" *ngIf="setTruckModelPropsArr[i]?.maxCapacity; else noMaxCap">{{setTruckModelPropsArr[i].maxCapacity}}</span><ng-template class="no-prop-value" #noMaxCap><span>...</span></ng-template></h3>
-                                        <h3>Service Type: <span class="set-prop" *ngIf="setTruckModelPropsArr[i]?.serviceType; else noServiceType">{{setTruckModelPropsArr[i].serviceType}}</span><ng-template class="no-prop-value" #noServiceType><span>...</span></ng-template></h3>
+                                        <h3>Type: <span class="set-prop" *ngIf="setTruckModelPropsArr[i]?.type; else noType">{{setTruckModelPropsArr[i].type}}</span><ng-template class="no-prop-value" #noType><span class="no-prop-value">...</span></ng-template></h3>
+                                        <h3>Min Capacity: <span class="set-prop" *ngIf="setTruckModelPropsArr[i]?.minCapacity; else noMinCap">{{setTruckModelPropsArr[i].minCapacity}}</span><ng-template #noMinCap><span class="no-prop-value">...</span></ng-template></h3>
+                                        <h3>Max Capacity: <span class="set-prop" *ngIf="setTruckModelPropsArr[i]?.maxCapacity; else noMaxCap">{{setTruckModelPropsArr[i].maxCapacity}}</span><ng-template #noMaxCap><span class="no-prop-value">...</span></ng-template></h3>
+                                        <h3>Service Type: <span class="set-prop" *ngIf="setTruckModelPropsArr[i]?.serviceType; else noServiceType">{{setTruckModelPropsArr[i].serviceType}}</span><ng-template #noServiceType><span class="no-prop-value">...</span></ng-template></h3>
                                     </div>
                                     <div class="flex-item col-3">
                                         <button class="img-upload" (click)="fileInput.click()">Upload Image</button>
