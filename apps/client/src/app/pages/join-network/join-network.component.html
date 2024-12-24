@@ -145,7 +145,7 @@
                                             class="form-control" 
                                             formControlName="name" 
                                             id="floatingInput" 
-                                            placeholder="Select Truck..." 
+                                            placeholder="Select Material..." 
                                             required 
                                             type="text" 
                                             name="materials" 
@@ -159,8 +159,8 @@
                                             @for (material of materialArr; track material; let i = $index) {
                                                 @if(i < 1) {
                                                     <option value="" disabled selected>Select Material...</option>
-                                                }@else {
-                                                    <option value={{material}}>{{material}}</option>
+                                                } @else {
+                                                    <option value={{material.name}}>{{material.name}}</option>
                                                 }
                                             } @empty {
                                             }
@@ -171,12 +171,12 @@
                                             type="number" 
                                             class="form-control" 
                                             id="floatingInput" 
-                                            formControlName="pricePerMile" 
-                                            name="pricePerMile" 
-                                            placeholder="Price Per Mile" 
+                                            formControlName="pricePerUnit" 
+                                            name="pricePerUnit" 
+                                            placeholder="Price Per Unit" 
                                             required
-                                            #pricePerMile
-                                            (blur)="onPricePerMileSelect(pricePerMile.value, i)"
+                                            #pricePerUnit
+                                            (blur)="onPriceUnitSelect(pricePerUnit.value, i)"
                                         >
                                     </div>
                                 </div>   
@@ -184,20 +184,19 @@
                             <div class="flex-item col-2">
                                 <div class="flex-container truck-properties">
                                     <div class="flex-item col-3">
-                                        <h3>Type: <span class="set-prop" *ngIf="setTruckModelPropsArr[i]?.type; else noType">{{setTruckModelPropsArr[i].type}}</span><ng-template class="no-prop-value" #noType><span class="no-prop-value">...</span></ng-template></h3>
-                                        <h3>Min Capacity: <span class="set-prop" *ngIf="setTruckModelPropsArr[i]?.minCapacity; else noMinCap">{{setTruckModelPropsArr[i].minCapacity}}</span><ng-template #noMinCap><span class="no-prop-value">...</span></ng-template></h3>
-                                        <h3>Max Capacity: <span class="set-prop" *ngIf="setTruckModelPropsArr[i]?.maxCapacity; else noMaxCap">{{setTruckModelPropsArr[i].maxCapacity}}</span><ng-template #noMaxCap><span class="no-prop-value">...</span></ng-template></h3>
-                                        <h3>Service Type: <span class="set-prop" *ngIf="setTruckModelPropsArr[i]?.serviceType; else noServiceType">{{setTruckModelPropsArr[i].serviceType}}</span><ng-template #noServiceType><span class="no-prop-value">...</span></ng-template></h3>
+                                        <h3>Name: <span class="set-prop" *ngIf="setMaterialPropsArr[i]?.name; else noType">{{setMaterialPropsArr[i].name}}</span><ng-template class="no-prop-value" #noType><span class="no-prop-value">...</span></ng-template></h3>
                                     </div>
                                     <div class="flex-item col-3">
-                                        <button class="img-upload" (click)="fileInput.click()">Upload Image</button>
-                                        <input #fileInput type="file" accept="image/*" (change)="onImageSelected($event, i)" hidden>
+                                        <!--<div *ngIf="setMaterialPropsArr[i].imgUrl">
+                                            <button class="img-upload" (click)="fileInput.click()">Upload Image</button>
+                                            <input #fileInput type="file" accept="image/*" (change)="onImageSelected($event, i)" hidden>
+                                        </div>-->
                                     </div>
                                     <div class="flex-item col-3">
-                                        <span *ngIf="setTruckModelPropsArr[i].imgUrl; else noImg">
-                                            <img [src]="setTruckModelPropsArr[i].imgUrl" alt="placeholder" />
+                                        <span *ngIf="setMaterialPropsArr[i].imgUrl; else noMatImg">
+                                            <img [src]="setMaterialPropsArr[i].imgUrl" alt="placeholder" />
                                         </span>
-                                        <ng-template #noImg>
+                                        <ng-template #noMatImg>
                                             <img src="assets/images/providers/img-placeholder.svg" alt="placeholder" />
                                         </ng-template>
                                     </div>

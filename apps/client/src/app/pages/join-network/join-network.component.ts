@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TruckProvidersService } from '../../shared/trucking-providers/truck-providers.service';
 import { TruckProvider } from '../../shared/trucking-providers/models/truck-provider.model';
-//import * as CONSTANTS from '../../shared/trucking-providers/truck-provider.constants';
 import { TrucksService } from '../../shared/trucks/trucks.service';
 import { Truck } from '../../shared/trucks/truck.inteface';
 import { LocalStorageService } from '../auth/local-storage.service';
@@ -12,6 +11,7 @@ import { UserService } from '../auth/user.service';
 import { MaterialsService } from '../../shared/materials/materials.service';
 import { Material } from '../../shared/materials/materials.interface';
 import { TruckModelProps } from '../../shared/trucks/truck-model-props.interface';
+import { MaterialProps } from '../../shared/materials/material-props.model';
 
 @Component({
   selector: 'app-join-network',
@@ -48,7 +48,8 @@ export class JoinNetworkComponent implements OnInit {
   public addedPricePerMile: number | null = null;
   public selectedTruckModel: Truck | null = null;
   public setTruckModelPropsArr: TruckModelProps[] = [];
-  
+  public setMaterialPropsArr: MaterialProps[] = [];
+
   ngOnInit() {
     this.truckItems = [];
       this.trucksService.getTrucks().subscribe((response: Truck[]) => {
@@ -117,6 +118,7 @@ export class JoinNetworkComponent implements OnInit {
 
   // create new form group for each material added to the form
   createMaterialItem(): FormGroup {
+    this.setMaterialPropsArr.push(new MaterialProps());
     return new FormGroup({
       name: new FormControl(''),
       pricePerUnit: new FormControl(''),
@@ -150,6 +152,7 @@ export class JoinNetworkComponent implements OnInit {
       //this.truckDriverForm.value.materialsArr as Material[],
     );
     console.log(truckProvider);
+    // ************ TEMP REMOVAL *************
     /*this.truckProvidersService.saveProvider(truckProvider).pipe(
       switchMap((response) => {
         console.log(response);
@@ -249,9 +252,15 @@ export class JoinNetworkComponent implements OnInit {
       imgUrl: selectedMaterial.imgUrl,
     }
     console.log(props);
-    this.setTruckModelPropsArr[index] = props;
-    console.log(this.setTruckModelPropsArr[index]);
+    this.setMaterialPropsArr[index] = props;
+    console.log(this.setMaterialPropsArr[index]);
   }
+
+  onPriceUnitSelect(price: any, index: number) {
+    const control = (this.truckDriverForm.get('materialsArr') as FormArray).at(index);
+    control.get('pricePerUnit')?.setValue(price);
+    console.log(control);
+}
 
   selectAllText(event: any) {
     event.target.select();
