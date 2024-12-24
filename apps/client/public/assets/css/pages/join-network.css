@@ -33,11 +33,11 @@
     margin-top: 20px;
 }
 
-.truck-container > .col-2:first-child {
+.props-container > .col-2:first-child {
     width: 33%;
 }
 
-.truck-container > .col-2:last-child {
+.props-container > .col-2:last-child {
     width: 65%;
 }
 
@@ -100,12 +100,12 @@ button.img-upload::before {
     margin-bottom: 0;
 }
 
-.truck-container {
+.props-container {
     border-top: 1px solid #555;
-    margin-bottom: 25px;
-    padding-bottom: 25px;
+    margin-top: 25px;
+    padding-top: 25px;
 }
 
-.truck-container:first-child {
+.props-container:first-child {
     border: none;
 }

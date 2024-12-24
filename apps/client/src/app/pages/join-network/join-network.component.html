@@ -56,7 +56,7 @@
                 <div formArrayName="truckTypesArr">
                     <div>
                     @for(item of getTruckItems().controls; track item; let i = $index) {
-                        <div class="flex-container truck-container">
+                        <div class="flex-container props-container">
                             <div class="flex-item col-2">
                                 <div [formGroupName]="i" class="flex-container">
                                     <div class="field-wrapper">
@@ -136,7 +136,7 @@
                 <h3>Materials</h3>
                 <div formArrayName="materialsArr" class="form-array-group">
                     @for(item of getMaterialsItems().controls; track item; let i = $index) {
-                        <div class="flex-container truck-container">
+                        <div class="flex-container props-container">
                             <div class="flex-item col-2">
                                 <div [formGroupName]="i" class="flex-container">
                                     <div class="field-wrapper">
