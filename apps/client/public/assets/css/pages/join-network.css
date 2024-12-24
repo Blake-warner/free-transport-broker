@@ -53,16 +53,17 @@
     background-color: #d8eaff;
     background-image: linear-gradient(#d8eaff, #75adec);
     color: #000;
-    max-width: 130px;
+    max-width: 112px;
     border-radius: 4px;
     font-weight: 300;
     position: relative;
     text-align: left;
-    padding-left: 20px;
+    padding-left: 14px;
     margin-top: 0px;
     transition: all .2s;
     font-size: 12px;
     height: 30px;
+    font-weight: normal;
 }
 
 .img-upload:hover {
@@ -83,14 +84,28 @@ button.img-upload::before {
     font-family: courier;
     color: #000;
     position: absolute;
-    top: 5px;
-    right: 12px;
+    top: 6px;
+    right: 5px;
 }
 
 .truck-properties.flex-container .flex-item.col-3:first-child {
-    width: 45%!important;
+    width: 47%!important;
 }
 
 .truck-properties.flex-container .flex-item.col-3:nth-child(2) {
-    width: 19%!important;
+    width: 17%!important;
+}
+
+.truck-properties .flex-item h3:last-child {
+    margin-bottom: 0;
+}
+
+.truck-container {
+    border-top: 1px solid #555;
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+}
+
+.truck-container:first-child {
+    border: none;
 }

@@ -9,7 +9,6 @@ import { Truck } from '../../shared/trucks/truck.inteface';
 import { LocalStorageService } from '../auth/local-storage.service';
 import { User } from '../auth/user/user';
 import { UserService } from '../auth/user.service';
-import { switchMap } from 'rxjs';
 import { MaterialsService } from '../../shared/materials/materials.service';
 import { Material } from '../../shared/materials/materials.interface';
 import { TruckModelProps } from '../../shared/trucks/truck-model-props.interface';
@@ -23,6 +22,8 @@ import { TruckModelProps } from '../../shared/trucks/truck-model-props.interface
 })
 export class JoinNetworkComponent implements OnInit {
   public imgSrc!: string;
+  public states = ['Alabama','Alaska','American Samoa','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Federated States of Micronesia','Florida','Georgia','Guam','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Marshall Islands','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Northern Mariana Islands','Ohio','Oklahoma','Oregon','Palau','Pennsylvania','Puerto Rico','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virgin Island','Virginia','Washington','West Virginia','Wisconsin','Wyoming']
+
 
   constructor(
     private readonly truckProvidersService: TruckProvidersService,
@@ -34,17 +35,20 @@ export class JoinNetworkComponent implements OnInit {
     console.log('form fields ', this.truckDriverForm.value);
   }
 
+  // Truck selection props
   public truckArr: Truck[] = [];
-  public materialArr: Material[] = [];
   public trucks: {id: number, type: string}[] = [];
   public truckItems: Truck[] = [];
+
+  // Material selection props
+  public materialArr: Material[] = [];
+
   @ViewChild('creditCardNumber') creditCardNumber!: ElementRef;
   public currentUser!: User;
   public addedPricePerMile: number | null = null;
   public selectedTruckModel: Truck | null = null;
   public setTruckModelPropsArr: TruckModelProps[] = [];
   
-
   ngOnInit() {
     this.truckItems = [];
       this.trucksService.getTrucks().subscribe((response: Truck[]) => {
@@ -59,6 +63,7 @@ export class JoinNetworkComponent implements OnInit {
       });
     this.materialsService.getMaterials().subscribe((response: Material[]) => {
       this.materialArr = response;
+      console.log(this.materialArr);
     });
     this.currentUser = JSON.parse(this.localStorageService.getItem('user') as string);
     console.log(this.setTruckModelPropsArr);
@@ -145,7 +150,7 @@ export class JoinNetworkComponent implements OnInit {
       //this.truckDriverForm.value.materialsArr as Material[],
     );
     console.log(truckProvider);
-    this.truckProvidersService.saveProvider(truckProvider).pipe(
+    /*this.truckProvidersService.saveProvider(truckProvider).pipe(
       switchMap((response) => {
         console.log(response);
         const profileId = response.id;
@@ -154,7 +159,7 @@ export class JoinNetworkComponent implements OnInit {
       }) 
     ).subscribe((response) => {
       console.log(response);
-    });
+    });*/
   }
 
   onTruckModelSelect(truckModel: any, index: number) {
@@ -165,7 +170,7 @@ export class JoinNetworkComponent implements OnInit {
     if(this.selectedTruckModel) {
       const controls = this.getTruckItems();
       const controlValues = {
-        imgUrl: this.selectedTruckModel.imgUrl,
+        image: this.selectedTruckModel.image,
         maxCapacity: this.selectedTruckModel.maxCapacity,
         minCapacity: this.selectedTruckModel.minCapacity,
         serviceType: this.selectedTruckModel.serviceType,
@@ -185,7 +190,7 @@ export class JoinNetworkComponent implements OnInit {
       minCapacity: selectedTruckModel.minCapacity,
       maxCapacity: selectedTruckModel.maxCapacity,
       serviceType: selectedTruckModel.serviceType,
-      imgUrl: selectedTruckModel.imgUrl,
+      image: selectedTruckModel.image,
     }
     console.log(props);
     this.setTruckModelPropsArr[index] = props;
@@ -216,6 +221,38 @@ export class JoinNetworkComponent implements OnInit {
     }
   }
 
+  onMaterialSelect(truckModel: any, index: number) {
+    this.selectedTruckModel = this.truckArr.find(truck => truck.type === truckModel) as Truck;
+    const selectedTruckModelsArr = this.truckDriverForm.controls.truckTypesArr;
+    console.log(this.selectedTruckModel);
+    console.log(selectedTruckModelsArr);
+    if(this.selectedTruckModel) {
+      const controls = this.getTruckItems();
+      const controlValues = {
+        image: this.selectedTruckModel.image,
+        maxCapacity: this.selectedTruckModel.maxCapacity,
+        minCapacity: this.selectedTruckModel.minCapacity,
+        serviceType: this.selectedTruckModel.serviceType,
+        type: this.selectedTruckModel.type
+      }
+      console.log(controlValues);
+      controls.at(index).patchValue(controlValues);
+      console.log(selectedTruckModelsArr);
+    }
+  }
+
+  setMaterialProps(materialType: any, index: number) {
+    const selectedMaterial = this.materialArr.find(material => material.name === materialType) as Material;
+    const props = {
+      id: selectedMaterial.id,
+      name: selectedMaterial.name,
+      imgUrl: selectedMaterial.imgUrl,
+    }
+    console.log(props);
+    this.setTruckModelPropsArr[index] = props;
+    console.log(this.setTruckModelPropsArr[index]);
+  }
+
   selectAllText(event: any) {
     event.target.select();
   }
@@ -243,12 +280,6 @@ export class JoinNetworkComponent implements OnInit {
       console.log(formGroup.value); // Access values of each FormGroup
     }
   }
-
-  public states = ['Alabama','Alaska','American Samoa','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Federated States of Micronesia','Florida','Georgia','Guam','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Marshall Islands','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Northern Mariana Islands','Ohio','Oklahoma','Oregon','Palau','Pennsylvania','Puerto Rico','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virgin Island','Virginia','Washington','West Virginia','Wisconsin','Wyoming']
-  public loadCapacity = ['1 Ton', '5 Tons', '10 Tons', '15 Tons', '20 Tons', '25 Tons'];
-  public serviceTypes = ['Material', 'Demo', 'Material/Demo'];
-  public materials = ['Aggregate', 'Concrete', 'Sand', 'Dirt', 'Rock'];
-  public unitForWeight = ['Pounds', 'Kilo tons'];
 
   formatCreditCardNumber(event: any) {
     console.log(event.target.value);
