@@ -22,8 +22,7 @@ import { MaterialProps } from '../../shared/materials/material-props.model';
 })
 export class JoinNetworkComponent implements OnInit {
   public imgSrc!: string;
-  public states = ['Alabama','Alaska','American Samoa','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Federated States of Micronesia','Florida','Georgia','Guam','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Marshall Islands','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Northern Mariana Islands','Ohio','Oklahoma','Oregon','Palau','Pennsylvania','Puerto Rico','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virgin Island','Virginia','Washington','West Virginia','Wisconsin','Wyoming']
-
+  public states = ['Alabama','Alaska','American Samoa','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Federated States of Micronesia','Florida','Georgia','Guam','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Marshall Islands','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Northern Mariana Islands','Ohio','Oklahoma','Oregon','Palau','Pennsylvania','Puerto Rico','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virgin Island','Virginia','Washington','West Virginia','Wisconsin','Wyoming'];
 
   constructor(
     private readonly truckProvidersService: TruckProvidersService,
@@ -49,6 +48,7 @@ export class JoinNetworkComponent implements OnInit {
   public selectedTruckModel: Truck | null = null;
   public setTruckModelPropsArr: TruckModelProps[] = [];
   public setMaterialPropsArr: MaterialProps[] = [];
+  public selectedMaterial: Material | null = null;
 
   ngOnInit() {
     this.truckItems = [];
@@ -122,6 +122,7 @@ export class JoinNetworkComponent implements OnInit {
     return new FormGroup({
       name: new FormControl(''),
       pricePerUnit: new FormControl(''),
+      imgUrl: new FormControl('')
     });
   }
 
@@ -129,7 +130,7 @@ export class JoinNetworkComponent implements OnInit {
     console.log('submitted form value: ', this.truckDriverForm.value);
     this.truckDriverForm.value.truckTypesArr?.map((truckType) => {
       console.log(truckType);
-      const truckObj = this.truckArr.find((truck) => truck.id === Number(truckType.type)) as Truck;
+      const truckObj = this.truckArr.find((truck) => truck.type === truckType.type) as Truck;
       if(truckObj) {
         this.truckItems.push(truckObj);
       }
@@ -173,11 +174,12 @@ export class JoinNetworkComponent implements OnInit {
     if(this.selectedTruckModel) {
       const controls = this.getTruckItems();
       const controlValues = {
-        image: this.selectedTruckModel.image,
+        imgUrl: this.selectedTruckModel.imgUrl,
         maxCapacity: this.selectedTruckModel.maxCapacity,
         minCapacity: this.selectedTruckModel.minCapacity,
         serviceType: this.selectedTruckModel.serviceType,
-        type: this.selectedTruckModel.type
+        type: this.selectedTruckModel.type,
+        pricePerMile: this.selectedTruckModel.pricePerMile
       }
       console.log(controlValues);
       controls.at(index).patchValue(controlValues);
@@ -193,7 +195,7 @@ export class JoinNetworkComponent implements OnInit {
       minCapacity: selectedTruckModel.minCapacity,
       maxCapacity: selectedTruckModel.maxCapacity,
       serviceType: selectedTruckModel.serviceType,
-      image: selectedTruckModel.image,
+      imgUrl: selectedTruckModel.imgUrl,
     }
     console.log(props);
     this.setTruckModelPropsArr[index] = props;
@@ -224,23 +226,21 @@ export class JoinNetworkComponent implements OnInit {
     }
   }
 
-  onMaterialSelect(truckModel: any, index: number) {
-    this.selectedTruckModel = this.truckArr.find(truck => truck.type === truckModel) as Truck;
-    const selectedTruckModelsArr = this.truckDriverForm.controls.truckTypesArr;
-    console.log(this.selectedTruckModel);
-    console.log(selectedTruckModelsArr);
-    if(this.selectedTruckModel) {
-      const controls = this.getTruckItems();
+  onMaterialSelect(materialName: any, index: number) {
+    this.selectedMaterial = this.materialArr.find(material => material.name === materialName) as Material;
+    const selectedMaterialArr = this.truckDriverForm.controls.materialsArr;
+    console.log(this.selectedMaterial);
+    console.log(selectedMaterialArr);
+    if(this.selectedMaterial) {
+      const controls = this.getMaterialsItems();
       const controlValues = {
-        image: this.selectedTruckModel.image,
-        maxCapacity: this.selectedTruckModel.maxCapacity,
-        minCapacity: this.selectedTruckModel.minCapacity,
-        serviceType: this.selectedTruckModel.serviceType,
-        type: this.selectedTruckModel.type
+        name: this.selectedMaterial.name,
+        imgUrl: this.selectedMaterial.imgUrl,
+        pricePerUnit: this.selectedMaterial.pricePerUnit
       }
       console.log(controlValues);
       controls.at(index).patchValue(controlValues);
-      console.log(selectedTruckModelsArr);
+      console.log(selectedMaterialArr);
     }
   }
 

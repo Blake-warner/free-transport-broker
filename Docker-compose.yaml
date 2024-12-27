@@ -14,15 +14,4 @@ services:
     ports:
       - 3000:3000
     depends_on:
-    - database
-    
-  database:
-    image: mysql
-    restart: always
-    volumes:
-      - ./data:/var/lib/mysql
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: ftb
+    - redis

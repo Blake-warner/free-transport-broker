@@ -109,3 +109,31 @@ button.img-upload::before {
 .props-container:first-child {
     border: none;
 }
+
+.custom-datalist-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+  
+  input[list] {
+    width: 100%;
+    padding-right: 2rem; /* Space for the custom arrow */
+    box-sizing: border-box;
+  }
+  
+  .custom-datalist-wrapper::after {
+    content: "▼"; /* Unicode character for a downward arrow */
+    font-size: 0.8rem;
+    position: absolute;
+    right: 10px;
+    top: 17%;
+    pointer-events: none;
+    color: #333;
+  }
+
+  input[type="text"]::-webkit-calendar-picker-indicator,
+  input[type="email"]::-webkit-calendar-picker-indicator,
+  input[type="number"]::-webkit-calendar-picker-indicator, 
+  input[type="search"]::-webkit-calendar-picker-indicator {
+    display: none !important;
+  }

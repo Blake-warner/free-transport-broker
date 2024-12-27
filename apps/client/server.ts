@@ -28,6 +28,9 @@ export function app(): express.Express {
     })
   );
 
+  // Serve static files from the backend
+  server.use('/uploads', express.static(join(__dirname, '../uploads')));
+
   // All regular routes use the Angular engine
   server.get('**', (req, res, next) => {
     const { protocol, originalUrl, baseUrl, headers } = req;

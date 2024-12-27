@@ -7,7 +7,6 @@ export const HOME_ROUTES:Routes = [
     {
         path: '',
         component: HomeComponent,
-        //canActivate: [authGuard],
         children: [
             { path: '', redirectTo: 'join-network', pathMatch: 'full' },
             { 

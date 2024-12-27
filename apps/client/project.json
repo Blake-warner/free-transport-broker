@@ -10,6 +10,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
+          "nx build client",
           "docker build -f ./apps/client/Dockerfile . -t web-server"
         ],
         "parallel": false
@@ -33,7 +34,7 @@
         "styles": ["apps/client/src/styles.css"],
         "scripts": [],
         "server": "apps/client/src/main.server.ts",
-        "prerender": true,
+        "prerender": false,
         "ssr": {
           "entry": "apps/client/server.ts"
         }

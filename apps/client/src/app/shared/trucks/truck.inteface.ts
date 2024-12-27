@@ -4,5 +4,6 @@ export interface Truck {
         minCapacity: number,
         maxCapacity: number,
         serviceType: string,
-        image: File,
+        imgUrl: string,
+        pricePerMile: number;
 }

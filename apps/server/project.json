@@ -9,7 +9,7 @@
       "executor": "nx:run-commands",
       "options": {
         "commands": [
-          "nx build server",
+          "nx build server NODE_OPTIONS='--trace-deprecation'",
           "docker build -f ./apps/server/Dockerfile . -t server"
         ],
         "parallel": false
