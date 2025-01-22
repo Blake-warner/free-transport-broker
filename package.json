@@ -5,8 +5,8 @@
   "scripts": {
     "start:client": "nx serve client",
     "start:server": "nx serve server",
-    "build:client": "ng build",
-    "build:server": "nest build"
+    "build:client": "nx build client",
+    "build:server": "nx build server" 
   },
   "private": true,
   "dependencies": {

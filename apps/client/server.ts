@@ -29,7 +29,7 @@ export function app(): express.Express {
   );
 
   // Serve static files from the backend
-  server.use('/uploads', express.static(join(__dirname, '../uploads')));
+  //server.use('/uploads', express.static(join(__dirname, '../uploads')));
 
   // All regular routes use the Angular engine
   server.get('**', (req, res, next) => {
@@ -51,7 +51,7 @@ export function app(): express.Express {
 }
 
 function run(): void {
-  const port = process.env['PORT'] || 4000;
+  const port = process.env['PORT'] || 4200;
 
   // Start up the Node server
   const server = app();

@@ -27,6 +27,9 @@ export class GoogleAuthenticationService implements OnModuleInit {
 
     async authenticate(token: string, fullName: string) {
         console.log('token from google');
+        console.log(token);
+        console.log(fullName);
+        console.log(typeof token, typeof fullName);
         const full_name = fullName;
         try {
             const loginTicket = await this.oauthClient.verifyIdToken({
@@ -35,9 +38,14 @@ export class GoogleAuthenticationService implements OnModuleInit {
             const { email, sub: googleId } = loginTicket.getPayload();
             const user = await this.userRepository.findOneBy({ googleId });
             if(user) {
+                console.log('user was found');
+                //const generatedTokens =  await this.authService.generateTokens(user);
+                //console.log(generatedTokens);
                 return this.authService.generateTokens(user);
             } else {
+                console.log('new user created')
                 const newUser = await this.userRepository.save({ email, googleId, full_name });
+                console.log(newUser);
                 return this.authService.generateTokens(newUser);
             }
         } catch {

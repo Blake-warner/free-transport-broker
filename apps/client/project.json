@@ -12,8 +12,7 @@
         "commands": [
           "nx build client",
           "docker build -f ./apps/client/Dockerfile . -t web-server"
-        ],
-        "parallel": false
+        ]
       }
     },
     "build": {

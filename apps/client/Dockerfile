@@ -6,4 +6,4 @@ ARG PORT=4200
 ENV PORT=$PORT
 
 EXPOSE $PORT
-CMD ["node", "./server/server.mjs"]
+CMD node ./server/server.mjs

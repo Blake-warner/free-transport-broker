@@ -20,7 +20,7 @@ import { GoogleOauthService } from '../google/google-oauth.service';
   templateUrl: './signin.component.html',
   styleUrl: './signin.component.css',
 })
-export class SigninComponent implements OnDestroy, OnInit {
+export class SigninComponent implements OnInit {
   googleAuthSubs!: Subscription;
 
   constructor(
@@ -43,25 +43,32 @@ export class SigninComponent implements OnDestroy, OnInit {
   }
 
   ngOnInit(): void {
-    this.googleAuthSubs = this.socialAuthService.authState.pipe(
-      catchError(err => of(err)),
+    console.log('init');
+    /*this.googleAuthSubs = this.socialAuthService.authState.pipe(
+      catchError(err => {
+        console.log('error fired for google oAuth');
+        return of(err)}
+      ),
       switchMap((socialUser) => {
         const idToken = socialUser.idToken;
         const fullName = socialUser.name;
-        console.log(socialUser);
+        console.log('social user: ', socialUser);
         return this.googleOauthService.Signin(idToken, fullName);
       })
     ).subscribe((response) => {
       console.log('googleOauth respopnse: ', response);
       this.authService.handleAuthentication(response)
-    })
+    })*/
+      this.googleAuthSubs = this.socialAuthService.authState.subscribe((response) => {
+        console.log('googleOauth respopnse: ', response);
+        //this.authService.handleAuthentication(response);
+      })
   }
-
+/*
   ngOnDestroy(): void {
     this.googleAuthSubs.unsubscribe();
-    console.log('on destroy');
   }
-
+*/
   googleSignin(googleWrapper: any) {
     googleWrapper.click();
   }

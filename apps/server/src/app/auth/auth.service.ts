@@ -63,16 +63,14 @@ export class AuthService {
             const { sub } = await this.jwtService.verifyAsync<Pick<ActiveUserData, 'sub'>>(
                 refreshTokenDto.refreshToken,
                 {
-                    secret: this.jwtConfiguration.secret,
-                    audience: this.jwtConfiguration.audience,
-                    issuer: this.jwtConfiguration.issuer,
+                    audience: this.jwtConfiguration.audience || 'localhost:3000',
+                    issuer: this.jwtConfiguration.issuer || 'localhost:3000',
+                    secret: this.jwtConfiguration.secret || 'bw6911EztRGlNa721ABXEztRTawfopnx8',
                 }
             );
             const user = await this.userService.findOneByOrFail(sub) as User;
-            console.log('aetghsbfggarebtgs: ', user);
             return this.generateTokens(user);
         } catch(err)  {
-            console.log('jwt token expired not good anymroe')
             throw new UnauthorizedException(err)
         }
     }
@@ -88,9 +86,9 @@ export class AuthService {
                 ...payload
             },
             {
-                audience: this.jwtConfiguration.audience,
-                issuer: this.jwtConfiguration.issuer,
-                secret: this.jwtConfiguration.secret,
+                audience: this.jwtConfiguration.audience || 'localhost:3000',
+                issuer: this.jwtConfiguration.issuer || 'localhost:3000',
+                secret: this.jwtConfiguration.secret || 'bw6911EztRGlNa721ABXEztRTawfopnx8',
                 expiresIn
             }
         )
